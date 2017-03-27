@@ -35,7 +35,7 @@ In addition, this project will include:
 
 ## Design Docs
 
-- [Wireframe][wireframe]
+[Wireframe][wireframe]
 
 [wireframe]: ./wireframe.xml
 
@@ -46,8 +46,8 @@ Design Ideas:
 ## Architecture and Technologies
 
 - Vanilla JavaScript
-- JQuery (clicking on grid/block to add/change direction)
-- 
+- Canvas
+- CreateJS (including SoundJS, TweenJS, and EaselJS)
 - Webpack
 
 This project will be structured with a webpack entry file, an index.html file, and the following scripts:
@@ -56,14 +56,13 @@ This project will be structured with a webpack entry file, an index.html file, a
 
 ## Implementation Timeline
 
-Phase 1: This is the feature (days)
-- notes
+Phase 1: Create block and grid classes with logic for moving blocks
 
-Phase 2:
+Phase 2: Add user controls in the browser
 
-Phase 3:
+Phase 3: Add sounds
 
-Phase 4:
+Phase 4: Add cool animations
 
 ## Bonus Features
 
