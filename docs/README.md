@@ -37,7 +37,7 @@ In addition, this project will include:
 
 [Wireframe][wireframe]
 
-[wireframe]: ./wireframe.xml
+[wireframe]: ./wireframe.png
 
 Design Ideas:
 - Grid squares only visible on hover?
