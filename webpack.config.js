@@ -1,5 +1,5 @@
 module.exports = {
-  entry: "./lib/musicapp.js",
+  entry: "./frontend/entry.jsx",
   output: {
     filename: "bundle.js"
   },
