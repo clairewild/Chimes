@@ -131,18 +131,27 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _grid = __webpack_require__(0);
+
+var _grid2 = _interopRequireDefault(_grid);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var GameView = function () {
-  function GameView(grid) {
+  function GameView(canvas) {
     _classCallCheck(this, GameView);
 
-    this.grid = grid;
+    this.canvas = canvas;
+    this.grid = new _grid2.default(canvas);
+
+    this.init = this.init.bind(this);
   }
 
   _createClass(GameView, [{
-    key: "start",
-    value: function start() {
+    key: 'init',
+    value: function init() {
       this.grid.addBlock([100, 100]); // this should create event handlers for grid and buttons, etc.
     }
   }]);
@@ -258,10 +267,6 @@ exports.default = Block;
 "use strict";
 
 
-var _grid = __webpack_require__(0);
-
-var _grid2 = _interopRequireDefault(_grid);
-
 var _grid_view = __webpack_require__(1);
 
 var _grid_view2 = _interopRequireDefault(_grid_view);
@@ -270,9 +275,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 document.addEventListener("DOMContentLoaded", function () {
   var canvas = document.getElementById("canvas");
-  var grid = new _grid2.default(canvas);
-
-  new _grid_view2.default(grid).start();
+  var gv = new _grid_view2.default(canvas);
+  gv.init();
 });
 
 /***/ })
