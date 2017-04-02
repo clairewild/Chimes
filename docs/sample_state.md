@@ -9,5 +9,7 @@ state = {
       pos: [1, 1],
       direction: "up"
     }
-  ]
+  ],
+  play: false,
+  hover: [null, null]
 }

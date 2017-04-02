@@ -4,7 +4,8 @@ import Grid from './grid.jsx';
 
 const mapStateToProps = state => ({
   cells: state.cells,
-  blocks: state.blocks
+  blocks: state.blocks,
+  hover: state.hover
 });
 
 const mapDispatchToProps = dispatch => ({

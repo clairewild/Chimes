@@ -1,6 +1,7 @@
 import React from 'react';
-import { Stage, Layer } from 'react-konva';
+import { Rect, Stage, Layer } from 'react-konva';
 
+import Board from '../board.jsx';
 import CellContainer from '../cells/cell_container.js';
 import BlockContainer from '../blocks/block_container.js';
 
@@ -27,15 +28,31 @@ class Grid extends React.Component {
     );
   }
 
+  renderHover() {
+    const size = 90;
+
+    if (this.props.hover[0] !== null && this.props.hover[1] !== null) {
+      return (
+        <Rect
+          ref="hover"
+          x={ this.props.hover[0] * size }
+          y={ this.props.hover[1] * size }
+          width={ size }
+          height={ size }
+          fill="blue">
+        </Rect>
+      );
+    }
+  }
+
   render() {
     return (
-      <Stage width={ 1000 } height={ 1000 } >
+      <Stage width={ 810 } height={ 810 }>
         <Layer>
-          <div className="grid-background">
-            { this.renderCells() }
-            { this.renderBlocks() }
-            <p>This is the grid</p>
-          </div>
+          <Board width={ 810 } height={ 810 } />
+          { this.renderCells() }
+          { this.renderBlocks() }
+          { this.renderHover() }
         </Layer>
       </Stage>
     );
