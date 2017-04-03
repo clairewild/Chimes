@@ -1,14 +1,15 @@
 import { connect } from 'react-redux';
 
+import { rotateBlock } from '../../actions/actions.js';
 import Block from './block.jsx'
 
 const mapStateToProps = (state, ownProps) => ({
-  pos: ownProps.pos,
-  direction: ownProps.direction
+  blockId: ownProps.id,
+  pos: ownProps.pos
 });
 
 const mapDispatchToProps = dispatch => ({
-
+  rotateBlock: pos => dispatch(rotateBlock(pos))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Block);

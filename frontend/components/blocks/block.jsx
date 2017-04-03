@@ -9,15 +9,20 @@ class Block extends React.Component {
   }
 
   handleClick() {
-    // rotate, change this.props.direction
+    this.props.rotateBlock(this.props.blockId);
   }
 
   render() {
+    const size = 90;
+
     return (
       <Rect
+        ref="block"
         onClick={ this.handleClick }
-        width={ 100 }
-        height={ 100 }
+        x={ this.props.pos[0] * size }
+        y={ this.props.pos[1] * size }
+        width={ size }
+        height={ size }
         fill="white">
       </Rect>
     )

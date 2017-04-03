@@ -12,6 +12,7 @@ class Grid extends React.Component {
 
   renderCells() {
     const cells = this.props.cells;
+
     return (
       cells.map(cell => (
         <CellContainer pos={ cell.pos } key={ cell.pos } />
@@ -20,10 +21,12 @@ class Grid extends React.Component {
   }
 
   renderBlocks() {
-    const blocks = this.props.blocks;
+    const blocks = this.props.blocks
+    const blockKeys = Object.keys(blocks);
+
     return (
-      blocks.map(block => (
-        <BlockContainer pos={ block.pos } direction={ block.direction } key={ block.pos } />
+      blockKeys.map(key => (
+        <BlockContainer id={ key } pos={ blocks[key].pos } direction={ blocks[key].direction } key={ key } />
       ))
     );
   }
@@ -42,6 +45,9 @@ class Grid extends React.Component {
           fill="blue">
         </Rect>
       );
+    }
+    else {
+      return null;
     }
   }
 

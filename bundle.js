@@ -4927,6 +4927,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var ADD_BLOCK = exports.ADD_BLOCK = "ADD_BLOCK";
+var ROTATE_BLOCK = exports.ROTATE_BLOCK = "ROTATE_BLOCK";
+var REVERSE_BLOCK = exports.REVERSE_BLOCK = "REVERSE_BLOCK";
 var STEP = exports.STEP = "STEP";
 var RESET = exports.RESET = "RESET";
 var TOGGLE_PLAY = exports.TOGGLE_PLAY = "TOGGLE_PLAY";
@@ -4936,6 +4938,20 @@ var addBlock = exports.addBlock = function addBlock(pos) {
   return {
     type: ADD_BLOCK,
     pos: pos
+  };
+};
+
+var rotateBlock = exports.rotateBlock = function rotateBlock(blockId) {
+  return {
+    type: ROTATE_BLOCK,
+    blockId: blockId
+  };
+};
+
+var reverseBlock = exports.reverseBlock = function reverseBlock(blockId) {
+  return {
+    type: REVERSE_BLOCK,
+    blockId: blockId
   };
 };
 
@@ -12309,15 +12325,20 @@ var Block = function (_React$Component) {
   _createClass(Block, [{
     key: 'handleClick',
     value: function handleClick() {
-      // rotate, change this.props.direction
+      this.props.rotateBlock(this.props.blockId);
     }
   }, {
     key: 'render',
     value: function render() {
+      var size = 90;
+
       return _react2.default.createElement(_reactKonva.Rect, {
+        ref: 'block',
         onClick: this.handleClick,
-        width: 100,
-        height: 100,
+        x: this.props.pos[0] * size,
+        y: this.props.pos[1] * size,
+        width: size,
+        height: size,
         fill: 'white' });
     }
   }]);
@@ -12340,6 +12361,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _reactRedux = __webpack_require__(29);
 
+var _actions = __webpack_require__(44);
+
 var _block = __webpack_require__(130);
 
 var _block2 = _interopRequireDefault(_block);
@@ -12348,13 +12371,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
   return {
-    pos: ownProps.pos,
-    direction: ownProps.direction
+    blockId: ownProps.id,
+    pos: ownProps.pos
   };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {};
+  return {
+    rotateBlock: function rotateBlock(pos) {
+      return dispatch((0, _actions.rotateBlock)(pos));
+    }
+  };
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_block2.default);
@@ -12530,6 +12557,7 @@ var Grid = function (_React$Component) {
     key: 'renderCells',
     value: function renderCells() {
       var cells = this.props.cells;
+
       return cells.map(function (cell) {
         return _react2.default.createElement(_cell_container2.default, { pos: cell.pos, key: cell.pos });
       });
@@ -12538,8 +12566,10 @@ var Grid = function (_React$Component) {
     key: 'renderBlocks',
     value: function renderBlocks() {
       var blocks = this.props.blocks;
-      return blocks.map(function (block) {
-        return _react2.default.createElement(_block_container2.default, { pos: block.pos, direction: block.direction, key: block.pos });
+      var blockKeys = Object.keys(blocks);
+
+      return blockKeys.map(function (key) {
+        return _react2.default.createElement(_block_container2.default, { id: key, pos: blocks[key].pos, direction: blocks[key].direction, key: key });
       });
     }
   }, {
@@ -12555,6 +12585,8 @@ var Grid = function (_React$Component) {
           width: size,
           height: size,
           fill: 'blue' });
+      } else {
+        return null;
       }
     }
   }, {
@@ -12657,6 +12689,11 @@ var Sidebar = function (_React$Component) {
           "p",
           null,
           "This is the sidebar!"
+        ),
+        _react2.default.createElement(
+          "button",
+          { onClick: this.handlePlay },
+          "Play Temp Button"
         )
       );
     }
@@ -12680,6 +12717,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _reactRedux = __webpack_require__(29);
 
+var _actions = __webpack_require__(44);
+
 var _sidebar = __webpack_require__(136);
 
 var _sidebar2 = _interopRequireDefault(_sidebar);
@@ -12687,11 +12726,31 @@ var _sidebar2 = _interopRequireDefault(_sidebar);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(state) {
-  return {};
+  return {
+    cells: state.cells,
+    blocks: state.blocks,
+    play: state.play
+  };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {};
+  return {
+    rotateBlock: function rotateBlock(blockId) {
+      return dispatch((0, _actions.rotateBlock)(blockId));
+    },
+    reverseBlock: function reverseBlock(blockId) {
+      return dispatch((0, _actions.reverseBlock)(blockId));
+    },
+    step: function step(blocks) {
+      return dispatch((0, _actions.step)(blocks));
+    },
+    reset: function reset() {
+      return dispatch((0, _actions.reset)());
+    },
+    togglePlay: function togglePlay() {
+      return dispatch((0, _actions.togglePlay)());
+    }
+  };
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_sidebar2.default);
@@ -12748,18 +12807,44 @@ var _actions = __webpack_require__(44);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var rotated = {
+  "up": "right",
+  "right": "down",
+  "down": "left",
+  "left": "up"
+};
+
+var reversed = {
+  "up": "down",
+  "down": "up",
+  "left": "right",
+  "right": "left"
+};
+
 var BlockReducer = function BlockReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments[1];
 
   Object.freeze(state);
-  var newState = (0, _merge2.default)([], state);
+  var newState = (0, _merge2.default)({}, state);
+  var block = void 0;
   switch (action.type) {
     case _actions.ADD_BLOCK:
-      newState.push({
+      var id = Object.keys(newState).length;
+      block = {
+        id: id,
         pos: action.pos,
         direction: "up"
-      });
+      };
+      newState[id] = block;
+      return newState;
+    case _actions.ROTATE_BLOCK:
+      block = newState[action.blockId];
+      block.direction = rotated[block.direction];
+      return newState;
+    case _actions.REVERSE_BLOCK:
+      block = newState[action.blockId];
+      block.direction = reversed[block.direction];
       return newState;
     case _actions.STEP:
       return action.blocks;

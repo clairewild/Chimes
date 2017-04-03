@@ -9,6 +9,7 @@ class Sidebar extends React.Component {
     return (
       <div className="sidebar">
         <p>This is the sidebar!</p>
+        <button onClick={ this.handlePlay }>Play Temp Button</button>
       </div>
     )
   }
