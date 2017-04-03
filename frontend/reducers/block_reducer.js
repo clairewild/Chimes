@@ -1,6 +1,6 @@
 import merge from 'lodash/merge';
 
-import { ADD_BLOCK, ROTATE_BLOCK, REVERSE_BLOCK, STEP, RESET } from '../actions/actions.js';
+import { ADD_BLOCK, ROTATE_BLOCK, REVERSE_BLOCK, MOVE_BLOCK, STEP, RESET } from '../actions/actions.js';
 
 const rotated = {
   "up": "right",
@@ -14,7 +14,14 @@ const reversed = {
   "down": "up",
   "left": "right",
   "right": "left"
-}
+};
+
+const offsets = {
+  "up": [0, -1],
+  "down": [0, 1],
+  "left": [-1, 0],
+  "right": [1, 0]
+};
 
 const BlockReducer = (state = {}, action) => {
   Object.freeze(state);
@@ -38,10 +45,16 @@ const BlockReducer = (state = {}, action) => {
       block = newState[action.blockId];
       block.direction = reversed[block.direction];
       return newState;
-    case STEP:
-      return action.blocks;
+    case MOVE_BLOCK:
+      block = newState[action.blockId];
+      let dx = offsets[block.direction][0];
+      let dy = offsets[block.direction][1];
+      let x = block.pos[0];
+      let y = block.pos[1];
+      block.pos = [x + dx, y + dy];
+      return newState;
     case RESET:
-      return [];
+      return {};
     default:
       return state;
   }

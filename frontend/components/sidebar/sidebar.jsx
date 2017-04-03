@@ -15,7 +15,7 @@ class Sidebar extends React.Component {
   }
 
   oneStep() {
-    const blocks = merge({}, this.props.blocks);
+    const blocks = this.props.blocks;
     const blockKeys = Object.keys(blocks);
     let block;
 
@@ -28,9 +28,7 @@ class Sidebar extends React.Component {
       else if (this.isHittingWall(block)) {
         this.props.reverseBlock(block.id)
       }
-
-      this.move(block);
-      blocks[key] = block;
+      this.props.moveBlock(block.id);
     });
   }
 
@@ -51,20 +49,6 @@ class Sidebar extends React.Component {
     let x = block.pos[0];
     let y = block.pos[1];
     return (x === 0 || x === 8 || y === 0 || y === 8);
-  }
-
-  move(block) {
-    const offsets = {
-      "up": [0, -1],
-      "down": [0, 1],
-      "left": [-1, 0],
-      "right": [1, 0]
-    };
-    let dx = offsets[block.direction][0];
-    let dy = offsets[block.direction][1];
-    let x = block.pos[0];
-    let y = block.pos[1];
-    block.pos = [x + dx, y + dy];
   }
 
   render() {

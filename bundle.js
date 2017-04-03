@@ -12751,7 +12751,7 @@ var Sidebar = function (_React$Component) {
     value: function oneStep() {
       var _this2 = this;
 
-      var blocks = (0, _merge2.default)({}, this.props.blocks);
+      var blocks = this.props.blocks;
       var blockKeys = Object.keys(blocks);
       var block = void 0;
 
@@ -12763,9 +12763,7 @@ var Sidebar = function (_React$Component) {
         } else if (_this2.isHittingWall(block)) {
           _this2.props.reverseBlock(block.id);
         }
-
-        _this2.move(block);
-        blocks[key] = block;
+        _this2.props.moveBlock(block.id);
       });
     }
   }, {
@@ -12788,21 +12786,6 @@ var Sidebar = function (_React$Component) {
       var x = block.pos[0];
       var y = block.pos[1];
       return x === 0 || x === 8 || y === 0 || y === 8;
-    }
-  }, {
-    key: 'move',
-    value: function move(block) {
-      var offsets = {
-        "up": [0, -1],
-        "down": [0, 1],
-        "left": [-1, 0],
-        "right": [1, 0]
-      };
-      var dx = offsets[block.direction][0];
-      var dy = offsets[block.direction][1];
-      var x = block.pos[0];
-      var y = block.pos[1];
-      block.pos = [x + dx, y + dy];
     }
   }, {
     key: 'render',
@@ -12865,6 +12848,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     reverseBlock: function reverseBlock(blockId) {
       return dispatch((0, _actions.reverseBlock)(blockId));
+    },
+    moveBlock: function moveBlock(blockId) {
+      return dispatch((0, _actions.moveBlock)(blockId));
     },
     step: function step(blocks) {
       return dispatch((0, _actions.step)(blocks));
@@ -12946,6 +12932,13 @@ var reversed = {
   "right": "left"
 };
 
+var offsets = {
+  "up": [0, -1],
+  "down": [0, 1],
+  "left": [-1, 0],
+  "right": [1, 0]
+};
+
 var BlockReducer = function BlockReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments[1];
@@ -12971,10 +12964,16 @@ var BlockReducer = function BlockReducer() {
       block = newState[action.blockId];
       block.direction = reversed[block.direction];
       return newState;
-    case _actions.STEP:
-      return action.blocks;
+    case _actions.MOVE_BLOCK:
+      block = newState[action.blockId];
+      var dx = offsets[block.direction][0];
+      var dy = offsets[block.direction][1];
+      var x = block.pos[0];
+      var y = block.pos[1];
+      block.pos = [x + dx, y + dy];
+      return newState;
     case _actions.RESET:
-      return [];
+      return {};
     default:
       return state;
   }
