@@ -1,15 +1,77 @@
 import React from 'react';
+import merge from 'lodash/merge';
 
 class Sidebar extends React.Component {
   constructor(props) {
     super(props);
+
+    this.oneStep = this.oneStep.bind(this);
+    this.isCollided = this.isCollided.bind(this);
+    this.isHittingWall = this.isHittingWall.bind(this);
+  }
+
+  componentDidUpdate() {
+
+  }
+
+  oneStep() {
+    const blocks = merge({}, this.props.blocks);
+    const blockKeys = Object.keys(blocks);
+    let block;
+
+    blockKeys.forEach(key => {
+      block = blocks[key];
+
+      if (this.isCollided(blocks, blockKeys, block)) {
+        this.props.rotateBlock(block.id);
+      }
+      else if (this.isHittingWall(block)) {
+        this.props.reverseBlock(block.id)
+      }
+
+      this.move(block);
+      blocks[key] = block;
+    });
+  }
+
+  isCollided(blocks, blockKeys, block) {
+    let x = block.pos[0];
+    let y = block.pos[1];
+    blockKeys.forEach(key => {
+      if (key !== block.id) {
+        if (blocks[key].pos[0] === x && blocks[key].pos[1] === y) {
+          return true;
+        }
+      }
+    });
+    return false;
+  }
+
+  isHittingWall(block) {
+    let x = block.pos[0];
+    let y = block.pos[1];
+    return (x === 0 || x === 8 || y === 0 || y === 8);
+  }
+
+  move(block) {
+    const offsets = {
+      "up": [0, -1],
+      "down": [0, 1],
+      "left": [-1, 0],
+      "right": [1, 0]
+    };
+    let dx = offsets[block.direction][0];
+    let dy = offsets[block.direction][1];
+    let x = block.pos[0];
+    let y = block.pos[1];
+    block.pos = [x + dx, y + dy];
   }
 
   render() {
     return (
       <div className="sidebar">
         <p>This is the sidebar!</p>
-        <button onClick={ this.handlePlay }>Play Temp Button</button>
+        <button onClick={ this.oneStep }>Play Temp Button</button>
       </div>
     )
   }
