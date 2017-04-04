@@ -12,6 +12,5 @@ state = {
         direction: "up"
       }
   },
-  play: false,
   hover: [null, null]
 }

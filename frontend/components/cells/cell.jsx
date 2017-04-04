@@ -10,10 +10,6 @@ class Cell extends React.Component {
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
   }
 
-  handleClick() {
-    this.props.addBlock(this.props.pos);
-  }
-
   handleMouseEnter() {
     this.props.hover(this.props.pos);
   }
@@ -22,15 +18,19 @@ class Cell extends React.Component {
     this.props.hover([null, null]);
   }
 
+  handleClick() {
+    this.props.addBlock(this.props.pos);
+  }
+
   render() {
     const size = 90;
 
     return (
       <Rect
         ref="cell"
-        onClick={ this.handleClick }
         onMouseEnter={ this.handleMouseEnter }
         onMouseLeave={ this.handleMouseLeave }
+        onClick={ this.handleClick }
         x={ this.props.pos[0] * size }
         y={ this.props.pos[1] * size }
         width={ size }

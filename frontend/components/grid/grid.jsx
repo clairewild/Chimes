@@ -53,14 +53,16 @@ class Grid extends React.Component {
 
   render() {
     return (
-      <Stage width={ 810 } height={ 810 }>
-        <Layer>
-          <Board width={ 810 } height={ 810 } />
-          { this.renderCells() }
-          { this.renderBlocks() }
-          { this.renderHover() }
-        </Layer>
-      </Stage>
+      <div className="main">
+        <Stage width={ 810 } height={ 810 }>
+          <Layer>
+            <Board width={ 810 } height={ 810 } />
+            { this.renderCells() }
+            { this.renderBlocks() }
+            { this.renderHover() }
+          </Layer>
+        </Stage>
+      </div>
     );
   }
 }

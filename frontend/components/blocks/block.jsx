@@ -23,7 +23,9 @@ class Block extends React.Component {
         y={ this.props.pos[1] * size }
         width={ size }
         height={ size }
-        fill="white">
+        fill="white"
+        
+        >
       </Rect>
     )
   }
