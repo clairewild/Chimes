@@ -1,5 +1,16 @@
-.main {
+html {
+  background-color: black;
+}
 
+.konvajs-content {
+  border: 1px solid white;
+  margin-top: 10px;
+}
+
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .sidebar {

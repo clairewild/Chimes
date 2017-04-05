@@ -32,7 +32,7 @@ class Grid extends React.Component {
   }
 
   renderHover() {
-    const size = 90;
+    const size = 70;
 
     if (this.props.hover[0] !== null && this.props.hover[1] !== null) {
       return (
@@ -42,7 +42,8 @@ class Grid extends React.Component {
           y={ this.props.hover[1] * size }
           width={ size }
           height={ size }
-          fill="blue">
+          stroke="white"
+          strokeWidth={ 1 }>
         </Rect>
       );
     }
@@ -54,9 +55,9 @@ class Grid extends React.Component {
   render() {
     return (
       <div className="main">
-        <Stage width={ 810 } height={ 810 }>
+        <Stage width={ 630 } height={ 630 }>
           <Layer>
-            <Board width={ 810 } height={ 810 } />
+            <Board width={ 630 } height={ 630 } />
             { this.renderCells() }
             { this.renderBlocks() }
             { this.renderHover() }

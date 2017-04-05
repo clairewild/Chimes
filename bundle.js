@@ -12311,6 +12311,11 @@ var Block = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Block.__proto__ || Object.getPrototypeOf(Block)).call(this, props));
 
+    _this.state = {
+      image: new Image()
+    };
+
+    _this.state.image.src = "/../../../assets/images/^.png";
     _this.handleClick = _this.handleClick.bind(_this);
     return _this;
   }
@@ -12323,7 +12328,8 @@ var Block = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var size = 90;
+      var size = 70;
+      var rotation = ROTATIONS[this.props.direction];
 
       return _react2.default.createElement(_reactKonva.Rect, {
         ref: 'block',
@@ -12332,14 +12338,20 @@ var Block = function (_React$Component) {
         y: this.props.pos[1] * size,
         width: size,
         height: size,
-        fill: 'white'
-
-      });
+        fillPatternImage: this.state.image,
+        fillPatternRotation: rotation });
     }
   }]);
 
   return Block;
 }(_react2.default.Component);
+
+var ROTATIONS = {
+  "up": 0,
+  "right": 90,
+  "down": 180,
+  "left": 270
+};
 
 exports.default = Block;
 
@@ -12367,7 +12379,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var mapStateToProps = function mapStateToProps(state, ownProps) {
   return {
     blockId: ownProps.id,
-    pos: ownProps.pos
+    pos: ownProps.pos,
+    direction: ownProps.direction
   };
 };
 
@@ -12495,7 +12508,7 @@ var Cell = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var size = 90;
+      var size = 70;
 
       return _react2.default.createElement(_reactKonva.Rect, {
         ref: 'cell',
@@ -12625,7 +12638,7 @@ var Grid = function (_React$Component) {
   }, {
     key: 'renderHover',
     value: function renderHover() {
-      var size = 90;
+      var size = 70;
 
       if (this.props.hover[0] !== null && this.props.hover[1] !== null) {
         return _react2.default.createElement(_reactKonva.Rect, {
@@ -12634,7 +12647,8 @@ var Grid = function (_React$Component) {
           y: this.props.hover[1] * size,
           width: size,
           height: size,
-          fill: 'blue' });
+          stroke: 'white',
+          strokeWidth: 1 });
       } else {
         return null;
       }
@@ -12647,11 +12661,11 @@ var Grid = function (_React$Component) {
         { className: 'main' },
         _react2.default.createElement(
           _reactKonva.Stage,
-          { width: 810, height: 810 },
+          { width: 630, height: 630 },
           _react2.default.createElement(
             _reactKonva.Layer,
             null,
-            _react2.default.createElement(_board2.default, { width: 810, height: 810 }),
+            _react2.default.createElement(_board2.default, { width: 630, height: 630 }),
             this.renderCells(),
             this.renderBlocks(),
             this.renderHover()

@@ -23,7 +23,7 @@ class Cell extends React.Component {
   }
 
   render() {
-    const size = 90;
+    const size = 70;
 
     return (
       <Rect

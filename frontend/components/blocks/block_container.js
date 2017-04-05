@@ -5,7 +5,8 @@ import Block from './block.jsx'
 
 const mapStateToProps = (state, ownProps) => ({
   blockId: ownProps.id,
-  pos: ownProps.pos
+  pos: ownProps.pos,
+  direction: ownProps.direction
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -4,7 +4,11 @@ import { Rect } from 'react-konva';
 class Block extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      image: new Image()
+    }
 
+    this.state.image.src = "/../../../assets/images/^.png";
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -13,7 +17,8 @@ class Block extends React.Component {
   }
 
   render() {
-    const size = 90;
+    const size = 70;
+    const rotation = ROTATIONS[this.props.direction];
 
     return (
       <Rect
@@ -23,12 +28,18 @@ class Block extends React.Component {
         y={ this.props.pos[1] * size }
         width={ size }
         height={ size }
-        fill="white"
-        
-        >
+        fillPatternImage={ this.state.image }
+        fillPatternRotation={ rotation }>
       </Rect>
-    )
+    );
   }
 }
+
+const ROTATIONS = {
+  "up": 0,
+  "right": 90,
+  "down": 180,
+  "left": 270
+};
 
 export default Block;

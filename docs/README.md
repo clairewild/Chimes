@@ -39,15 +39,12 @@ In addition, this project will include:
 
 [wireframe]: ./wireframe.png
 
-Design Ideas:
-- Grid squares only visible on hover?
-- Colors: turquoise/blue, or orange/red
-
 ## Architecture and Technologies
 
-- Vanilla JavaScript
+- React
 - Canvas
-- CreateJS (including SoundJS, TweenJS, and EaselJS)
+- Konva library
+- HTML audio elements
 - Webpack
 
 This project will be structured with a webpack entry file, an index.html file, and the following scripts:
@@ -56,7 +53,7 @@ This project will be structured with a webpack entry file, an index.html file, a
 
 ## Implementation Timeline
 
-Phase 1: Create block and grid classes with logic for moving blocks
+Phase 1: Create block and grid components with logic for moving blocks
 
 Phase 2: Add user controls in the browser
 
