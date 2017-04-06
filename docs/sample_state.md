@@ -1,16 +1,16 @@
 state = {
   cells: [
     {
-      pos: [0, 0]
+      pos: { x: 0, y: 1 }
     }
   ],
   blocks: {
     1:
       {
         id: 1,
-        pos: [1, 1],
+        pos: { x: 0, y: 0 },
         direction: "up"
       }
   },
-  hover: [null, null]
+  hover: { x: null, y: null }
 }

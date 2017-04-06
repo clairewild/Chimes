@@ -12,7 +12,7 @@ class Board extends React.Component {
       <Rect
         x={ 0 } y={ 0 }
         width={ this.props.width } height={ this.props.height }
-        fill={ '#0A0B1A' }>
+        fill="black">
       </Rect>
     );
   }

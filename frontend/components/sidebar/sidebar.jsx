@@ -5,13 +5,15 @@ class Sidebar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      intervalHandler: null
+      intervalHandler: null,
+      sidebarOpen: true
     };
     this.oneStep = this.oneStep.bind(this);
     this.isCollided = this.isCollided.bind(this);
     this.isHittingWall = this.isHittingWall.bind(this);
     this.playSound = this.playSound.bind(this);
     this.togglePlay = this.togglePlay.bind(this);
+    this.toggleSidebar = this.toggleSidebar.bind(this);
   }
 
   oneStep() {
@@ -83,16 +85,33 @@ class Sidebar extends React.Component {
     }
   }
 
+  toggleSidebar() {
+    if (this.state.sidebarOpen) {
+      this.setState(sidebarOpen: false);
+    }
+    else {
+      this.setState(sidebarOpen: true);
+    }
+  }
+
   render() {
     const buttonImg = (this.state.intervalHandler) ? "../../../assets/images/pause.png" : "../../../assets/images/play-button.png";
 
-    return (
-      <div className="sidebar">
-        <p>This is the sidebar!</p>
-        <img className="play-button" onClick={ this.togglePlay } src={ buttonImg } />
-        <button className="reset-button" onClick={ this.props.reset }>Reset</button>
-      </div>
-    )
+    if (this.state.sidebarOpen) {
+      return (
+        <div>
+          <i className="fa fa-bars" onClick={ this.toggleSidebar } aria-hidden="true"></i>
+          <div className="sidebar">
+            <p>This is the sidebar!</p>
+            <img className="play-button" onClick={ this.togglePlay } src={ buttonImg } />
+            <button className="reset-button" onClick={ this.props.reset }>Reset</button>
+          </div>
+        </div>
+      );
+    }
+    else {
+      return (<i className="fa fa-bars" onClick={ this.toggleSidebar } aria-hidden="true"></i>);
+    }
   }
 }
 
