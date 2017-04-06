@@ -12316,16 +12316,10 @@ var Block = function (_React$Component) {
     };
 
     _this.state.image.src = "/../../../assets/images/^.png";
-    _this.handleClick = _this.handleClick.bind(_this);
     return _this;
   }
 
   _createClass(Block, [{
-    key: 'handleClick',
-    value: function handleClick() {
-      this.props.rotateBlock(this.props.blockId);
-    }
-  }, {
     key: 'render',
     value: function render() {
       var size = 70;
@@ -12333,7 +12327,6 @@ var Block = function (_React$Component) {
 
       return _react2.default.createElement(_reactKonva.Rect, {
         ref: 'block',
-        onClick: this.handleClick,
         x: this.props.pos[0] * size,
         y: this.props.pos[1] * size,
         width: size,
@@ -12368,8 +12361,6 @@ Object.defineProperty(exports, "__esModule", {
 
 var _reactRedux = __webpack_require__(30);
 
-var _actions = __webpack_require__(25);
-
 var _block = __webpack_require__(130);
 
 var _block2 = _interopRequireDefault(_block);
@@ -12378,18 +12369,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
   return {
-    blockId: ownProps.id,
     pos: ownProps.pos,
     direction: ownProps.direction
   };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {
-    rotateBlock: function rotateBlock(pos) {
-      return dispatch((0, _actions.rotateBlock)(pos));
-    }
-  };
+  return {};
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_block2.default);
@@ -12604,7 +12590,16 @@ var Grid = function (_React$Component) {
     key: 'handleClick',
     value: function handleClick(e) {
       var pos = this.convertToPos(e);
-      this.props.addBlock(pos);
+      var blocks = this.props.blocks;
+      var blockKeys = Object.keys(blocks);
+      var blockId = blockKeys.filter(function (key) {
+        return blocks[key].pos[0] === pos[0] && blocks[key].pos[1] === pos[1];
+      })[0];
+      if (blockId) {
+        this.props.rotateBlock(blockId);
+      } else {
+        this.props.addBlock(pos);
+      }
     }
   }, {
     key: 'convertToPos',
@@ -12722,6 +12717,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     addBlock: function addBlock(pos) {
       return dispatch((0, _actions.addBlock)(pos));
+    },
+    rotateBlock: function rotateBlock(blockId) {
+      return dispatch((0, _actions.rotateBlock)(blockId));
     }
   };
 };

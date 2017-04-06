@@ -7,13 +7,8 @@ class Block extends React.Component {
     this.state = {
       image: new Image()
     }
-
+    
     this.state.image.src = "/../../../assets/images/^.png";
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick() {
-    this.props.rotateBlock(this.props.blockId);
   }
 
   render() {
@@ -23,7 +18,6 @@ class Block extends React.Component {
     return (
       <Rect
         ref="block"
-        onClick={ this.handleClick }
         x={ this.props.pos[0] * size }
         y={ this.props.pos[1] * size }
         width={ size }

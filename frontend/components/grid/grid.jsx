@@ -25,7 +25,17 @@ class Grid extends React.Component {
 
   handleClick(e) {
     const pos = this.convertToPos(e);
-    this.props.addBlock(pos);
+    const blocks = this.props.blocks;
+    const blockKeys = Object.keys(blocks);
+    const blockId = blockKeys.filter(key => {
+      return blocks[key].pos[0] === pos[0] && blocks[key].pos[1] === pos[1];
+    })[0];
+    if (blockId) {
+      this.props.rotateBlock(blockId);
+    }
+    else {
+      this.props.addBlock(pos);
+    }
   }
 
   convertToPos(e) {
