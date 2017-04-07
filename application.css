@@ -22,7 +22,8 @@ html {
 }
 
 .instructions h3 {
-  font-size: 45px;
+  font-family: 'PT Sans', sans-serif;
+  font-size: 48px;
   margin: 0;
 }
 
@@ -63,8 +64,9 @@ html {
 }
 
 .sidebar h2 {
-  font-family: sans-serif;
-  font-size: 17px;
+  font-family: 'PT Sans', sans-serif;
+  font-size: 20px;
+  margin-top: 5px;
 }
 
 .play-button {

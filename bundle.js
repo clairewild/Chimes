@@ -12653,7 +12653,7 @@ var Grid = function (_React$Component) {
             'h3',
             null,
             _react2.default.createElement('i', { className: 'fa fa-music', 'aria-hidden': 'true' }),
-            ' Click Here'
+            '  Click Here'
           ),
           _react2.default.createElement(
             'p',
