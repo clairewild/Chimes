@@ -8,6 +8,9 @@ import BlockContainer from '../blocks/block_container.js';
 class Grid extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      instructions: true
+    };
 
     this.handleMouseOver = this.handleMouseOver.bind(this);
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
@@ -24,12 +27,17 @@ class Grid extends React.Component {
   }
 
   handleClick(e) {
+    this.setState({
+      instructions: false
+    });
+
     const pos = this.convertToPos(e);
     const blocks = this.props.blocks;
     const blockKeys = Object.keys(blocks);
     const blockId = blockKeys.filter(key => {
       return blocks[key].pos[0] === pos[0] && blocks[key].pos[1] === pos[1];
     })[0];
+
     if (blockId) {
       this.props.rotateBlock(blockId);
     }
@@ -58,13 +66,24 @@ class Grid extends React.Component {
     );
   }
 
+  renderInstructions() {
+    if (this.state.instructions) {
+      return (
+        <div className="instructions">
+          <h3><i className="fa fa-music" aria-hidden="true"></i> Click Here</h3>
+          <p>( then press play )</p>
+        </div>
+      );
+    }
+  }
+
   renderBlocks() {
     const blocks = this.props.blocks;
     const blockKeys = Object.keys(blocks);
 
     return (
       blockKeys.map(key => (
-        <BlockContainer id={ key } pos={ blocks[key].pos } direction={ blocks[key].direction } key={ key } />
+        <BlockContainer pos={ blocks[key].pos } direction={ blocks[key].direction } collided={ blocks[key].collided } key={ key } />
       ))
     );
   }
@@ -93,6 +112,7 @@ class Grid extends React.Component {
   render() {
     return (
       <div className="main">
+        { this.renderInstructions() }
         <Stage
           onMouseOver={ this.handleMouseOver }
           onMouseLeave={ this.handleMouseLeave }

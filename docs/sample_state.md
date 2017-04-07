@@ -9,7 +9,8 @@ state = {
       {
         id: 1,
         pos: { x: 0, y: 0 },
-        direction: "up"
+        direction: "up",
+        collided: false
       }
   },
   hover: { x: null, y: null }

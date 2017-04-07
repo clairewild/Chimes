@@ -13,41 +13,99 @@ html {
   justify-content: center;
 }
 
+.instructions {
+  color: #00D7CA;
+  position: absolute;
+  z-index: 100;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.instructions h3 {
+  font-size: 45px;
+  margin: 0;
+}
+
+#menu {
+  transition: all .3s ease;
+  position: fixed;
+  right: -180px;
+  top: 0;
+  height: 100%;
+}
+
+#menu.menu-open {
+  right: 0px;
+}
+
+#menu .fa-bars {
+  color: #00D7CA;
+  position: absolute;
+  right: 190px;
+  top: 15px;
+  width: 50px;
+  height: 50px;
+  font-size: 45px;
+}
+
+#menu .fa-bars:hover {
+  cursor: pointer;
+}
+
 .sidebar {
-    position: fixed;
-    right: 0;
-    top: 0;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    border-left: 2px solid black;
-    padding: 20px;
-    background-color: white;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 20px;
+  width: 130px;
+  background-color: white;
+  align-items: center;
+}
+
+.sidebar h2 {
+  font-family: sans-serif;
+  font-size: 17px;
 }
 
 .play-button {
-    width: 70px;
+  width: 70px;
 }
 
 .play-button:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .reset-button {
-    padding: 7px 20px;
-    margin-top: 20px;
-    background-color: white;
-    border: 2px solid black;
-    font-size: 15px;
+  width: 130px;
+  padding: 5px;
+  background-color: white;
+  border: 2px solid black;
+  font-size: 15px;
+  margin: 20px 0 80px;
 }
 
 .reset-button:hover {
-    cursor: pointer;
-    color: #3539D6;
-    border-color: #3539D6;
+  cursor: pointer;
+  color: white;
+  background-color: black;
 }
 
 .reset-button:focus {
-    outline: none;
+  outline: none;
+}
+
+.icons {
+  position: absolute;
+  bottom: 10px;
+}
+
+.icons i {
+  color: #00D7CA;
+  width: 50px;
+  height: 50px;
+  font-size: 45px;
+}
+
+.icons i:hover {
+  cursor: pointer;
 }

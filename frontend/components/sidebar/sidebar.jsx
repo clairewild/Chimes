@@ -5,8 +5,7 @@ class Sidebar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      intervalHandler: null,
-      sidebarOpen: true
+      intervalHandler: null
     };
     this.oneStep = this.oneStep.bind(this);
     this.isCollided = this.isCollided.bind(this);
@@ -26,10 +25,14 @@ class Sidebar extends React.Component {
 
       if (this.isCollided(blocks, blockKeys, block)) {
         this.props.rotateBlock(block.id);
+        this.props.toggleCollision(block.id);
       }
       else if (this.isHittingWall(block)) {
         this.playSound(block.pos);
         this.props.reverseBlock(block.id);
+      }
+      else if (block.collided) {
+        this.props.toggleCollision(block.id);
       }
       this.props.moveBlock(block.id);
     });
@@ -86,32 +89,34 @@ class Sidebar extends React.Component {
   }
 
   toggleSidebar() {
-    if (this.state.sidebarOpen) {
-      this.setState(sidebarOpen: false);
-    }
-    else {
-      this.setState(sidebarOpen: true);
-    }
+    const menu = document.getElementById("menu");
+    menu.classList.toggle("menu-open");
   }
 
   render() {
     const buttonImg = (this.state.intervalHandler) ? "../../../assets/images/pause.png" : "../../../assets/images/play-button.png";
 
-    if (this.state.sidebarOpen) {
-      return (
-        <div>
-          <i className="fa fa-bars" onClick={ this.toggleSidebar } aria-hidden="true"></i>
-          <div className="sidebar">
-            <p>This is the sidebar!</p>
-            <img className="play-button" onClick={ this.togglePlay } src={ buttonImg } />
-            <button className="reset-button" onClick={ this.props.reset }>Reset</button>
+    return (
+      <div id="menu">
+        <i className="fa fa-bars" onClick={ this.toggleSidebar } aria-hidden="true"></i>
+
+        <div className="sidebar">
+          <h2>NameOfApp</h2>
+          <img className="play-button" onClick={ this.togglePlay } src={ buttonImg } />
+          <button className="reset-button" onClick={ this.props.reset }>Reset</button>
+
+          <div className="icons">
+            <a href="https://github.com/clairewild">
+              <i className="fa fa-github" aria-hidden="true"></i>
+            </a>
+
+            <a href="https://www.linkedin.com/in/claire-wild-9b132484/">
+              <i className="fa fa-linkedin" aria-hidden="true"></i>
+            </a>
           </div>
         </div>
-      );
-    }
-    else {
-      return (<i className="fa fa-bars" onClick={ this.toggleSidebar } aria-hidden="true"></i>);
-    }
+      </div>
+    );
   }
 }
 

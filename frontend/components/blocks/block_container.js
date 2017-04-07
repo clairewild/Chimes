@@ -4,7 +4,8 @@ import Block from './block.jsx';
 
 const mapStateToProps = (state, ownProps) => ({
   pos: ownProps.pos,
-  direction: ownProps.direction
+  direction: ownProps.direction,
+  collided: ownProps.collided
 });
 
 const mapDispatchToProps = dispatch => ({

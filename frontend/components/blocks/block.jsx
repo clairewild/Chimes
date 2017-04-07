@@ -5,14 +5,17 @@ class Block extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      image: new Image()
+      arrow: new Image(),
+      dot: new Image()
     }
-    
-    this.state.image.src = "/../../../assets/images/^.png";
+
+    this.state.arrow.src = "/../../../assets/images/^.png";
+    this.state.dot.src = "/../../../assets/images/dot.png";
   }
 
   render() {
     const size = 70;
+    const image = (this.props.collided) ? (this.state.dot) : (this.state.arrow);
     const rotation = ROTATIONS[this.props.direction];
 
     return (
@@ -22,7 +25,7 @@ class Block extends React.Component {
         y={ this.props.pos[1] * size }
         width={ size }
         height={ size }
-        fillPatternImage={ this.state.image }
+        fillPatternImage={ image }
         fillPatternRotation={ rotation }>
       </Rect>
     );

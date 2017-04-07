@@ -3011,64 +3011,6 @@ module.exports = ReactReconciler;
 
 /***/ }),
 /* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var ADD_BLOCK = exports.ADD_BLOCK = "ADD_BLOCK";
-var ROTATE_BLOCK = exports.ROTATE_BLOCK = "ROTATE_BLOCK";
-var REVERSE_BLOCK = exports.REVERSE_BLOCK = "REVERSE_BLOCK";
-var MOVE_BLOCK = exports.MOVE_BLOCK = "MOVE_BLOCK";
-var RESET = exports.RESET = "RESET";
-var HOVER = exports.HOVER = "HOVER";
-
-var addBlock = exports.addBlock = function addBlock(pos) {
-  return {
-    type: ADD_BLOCK,
-    pos: pos
-  };
-};
-
-var rotateBlock = exports.rotateBlock = function rotateBlock(blockId) {
-  return {
-    type: ROTATE_BLOCK,
-    blockId: blockId
-  };
-};
-
-var reverseBlock = exports.reverseBlock = function reverseBlock(blockId) {
-  return {
-    type: REVERSE_BLOCK,
-    blockId: blockId
-  };
-};
-
-var moveBlock = exports.moveBlock = function moveBlock(blockId) {
-  return {
-    type: MOVE_BLOCK,
-    blockId: blockId
-  };
-};
-
-var reset = exports.reset = function reset() {
-  return {
-    type: RESET
-  };
-};
-
-var hover = exports.hover = function hover(pos) {
-  return {
-    type: HOVER,
-    pos: pos
-  };
-};
-
-/***/ }),
-/* 26 */
 /***/ (function(module, exports) {
 
 /**
@@ -3103,7 +3045,7 @@ module.exports = isObjectLike;
 
 
 /***/ }),
-/* 27 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3387,7 +3329,7 @@ module.exports = EventPluginHub;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 28 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3403,7 +3345,7 @@ module.exports = EventPluginHub;
 
 
 
-var EventPluginHub = __webpack_require__(27);
+var EventPluginHub = __webpack_require__(26);
 var EventPluginUtils = __webpack_require__(55);
 
 var accumulateInto = __webpack_require__(109);
@@ -3527,7 +3469,7 @@ module.exports = EventPropagators;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 29 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3591,7 +3533,7 @@ SyntheticEvent.augmentClass(SyntheticUIEvent, UIEventInterface);
 module.exports = SyntheticUIEvent;
 
 /***/ }),
-/* 30 */
+/* 29 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3607,6 +3549,72 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var ADD_BLOCK = exports.ADD_BLOCK = "ADD_BLOCK";
+var ROTATE_BLOCK = exports.ROTATE_BLOCK = "ROTATE_BLOCK";
+var REVERSE_BLOCK = exports.REVERSE_BLOCK = "REVERSE_BLOCK";
+var MOVE_BLOCK = exports.MOVE_BLOCK = "MOVE_BLOCK";
+var TOGGLE_COLLISION = exports.TOGGLE_COLLISION = "TOGGLE_COLLISION";
+var RESET = exports.RESET = "RESET";
+var HOVER = exports.HOVER = "HOVER";
+
+var addBlock = exports.addBlock = function addBlock(pos) {
+  return {
+    type: ADD_BLOCK,
+    pos: pos
+  };
+};
+
+var rotateBlock = exports.rotateBlock = function rotateBlock(blockId) {
+  return {
+    type: ROTATE_BLOCK,
+    blockId: blockId
+  };
+};
+
+var reverseBlock = exports.reverseBlock = function reverseBlock(blockId) {
+  return {
+    type: REVERSE_BLOCK,
+    blockId: blockId
+  };
+};
+
+var moveBlock = exports.moveBlock = function moveBlock(blockId) {
+  return {
+    type: MOVE_BLOCK,
+    blockId: blockId
+  };
+};
+
+var toggleCollision = exports.toggleCollision = function toggleCollision(blockId) {
+  return {
+    type: TOGGLE_COLLISION,
+    blockId: blockId
+  };
+};
+
+var reset = exports.reset = function reset() {
+  return {
+    type: RESET
+  };
+};
+
+var hover = exports.hover = function hover(pos) {
+  return {
+    type: HOVER,
+    pos: pos
+  };
+};
 
 /***/ }),
 /* 31 */
@@ -4442,7 +4450,7 @@ module.exports = ReactBrowserEventEmitter;
 
 
 
-var SyntheticUIEvent = __webpack_require__(29);
+var SyntheticUIEvent = __webpack_require__(28);
 var ViewportMetrics = __webpack_require__(108);
 
 var getEventModifierState = __webpack_require__(63);
@@ -8215,7 +8223,7 @@ module.exports = identity;
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseIsArguments = __webpack_require__(178),
-    isObjectLike = __webpack_require__(26);
+    isObjectLike = __webpack_require__(25);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -12195,7 +12203,7 @@ var _react = __webpack_require__(9);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRedux = __webpack_require__(30);
+var _reactRedux = __webpack_require__(29);
 
 var _app = __webpack_require__(129);
 
@@ -12312,10 +12320,12 @@ var Block = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Block.__proto__ || Object.getPrototypeOf(Block)).call(this, props));
 
     _this.state = {
-      image: new Image()
+      arrow: new Image(),
+      dot: new Image()
     };
 
-    _this.state.image.src = "/../../../assets/images/^.png";
+    _this.state.arrow.src = "/../../../assets/images/^.png";
+    _this.state.dot.src = "/../../../assets/images/dot.png";
     return _this;
   }
 
@@ -12323,6 +12333,7 @@ var Block = function (_React$Component) {
     key: 'render',
     value: function render() {
       var size = 70;
+      var image = this.props.collided ? this.state.dot : this.state.arrow;
       var rotation = ROTATIONS[this.props.direction];
 
       return _react2.default.createElement(_reactKonva.Rect, {
@@ -12331,7 +12342,7 @@ var Block = function (_React$Component) {
         y: this.props.pos[1] * size,
         width: size,
         height: size,
-        fillPatternImage: this.state.image,
+        fillPatternImage: image,
         fillPatternRotation: rotation });
     }
   }]);
@@ -12359,7 +12370,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _reactRedux = __webpack_require__(30);
+var _reactRedux = __webpack_require__(29);
 
 var _block = __webpack_require__(130);
 
@@ -12370,7 +12381,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var mapStateToProps = function mapStateToProps(state, ownProps) {
   return {
     pos: ownProps.pos,
-    direction: ownProps.direction
+    direction: ownProps.direction,
+    collided: ownProps.collided
   };
 };
 
@@ -12502,7 +12514,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _reactRedux = __webpack_require__(30);
+var _reactRedux = __webpack_require__(29);
 
 var _cell = __webpack_require__(133);
 
@@ -12569,6 +12581,10 @@ var Grid = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Grid.__proto__ || Object.getPrototypeOf(Grid)).call(this, props));
 
+    _this.state = {
+      instructions: true
+    };
+
     _this.handleMouseOver = _this.handleMouseOver.bind(_this);
     _this.handleMouseLeave = _this.handleMouseLeave.bind(_this);
     _this.handleClick = _this.handleClick.bind(_this);
@@ -12589,12 +12605,17 @@ var Grid = function (_React$Component) {
   }, {
     key: 'handleClick',
     value: function handleClick(e) {
+      this.setState({
+        instructions: false
+      });
+
       var pos = this.convertToPos(e);
       var blocks = this.props.blocks;
       var blockKeys = Object.keys(blocks);
       var blockId = blockKeys.filter(function (key) {
         return blocks[key].pos[0] === pos[0] && blocks[key].pos[1] === pos[1];
       })[0];
+
       if (blockId) {
         this.props.rotateBlock(blockId);
       } else {
@@ -12622,13 +12643,34 @@ var Grid = function (_React$Component) {
       });
     }
   }, {
+    key: 'renderInstructions',
+    value: function renderInstructions() {
+      if (this.state.instructions) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'instructions' },
+          _react2.default.createElement(
+            'h3',
+            null,
+            _react2.default.createElement('i', { className: 'fa fa-music', 'aria-hidden': 'true' }),
+            ' Click Here'
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            '( then press play )'
+          )
+        );
+      }
+    }
+  }, {
     key: 'renderBlocks',
     value: function renderBlocks() {
       var blocks = this.props.blocks;
       var blockKeys = Object.keys(blocks);
 
       return blockKeys.map(function (key) {
-        return _react2.default.createElement(_block_container2.default, { id: key, pos: blocks[key].pos, direction: blocks[key].direction, key: key });
+        return _react2.default.createElement(_block_container2.default, { pos: blocks[key].pos, direction: blocks[key].direction, collided: blocks[key].collided, key: key });
       });
     }
   }, {
@@ -12655,6 +12697,7 @@ var Grid = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { className: 'main' },
+        this.renderInstructions(),
         _react2.default.createElement(
           _reactKonva.Stage,
           {
@@ -12692,9 +12735,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _reactRedux = __webpack_require__(30);
+var _reactRedux = __webpack_require__(29);
 
-var _actions = __webpack_require__(25);
+var _actions = __webpack_require__(30);
 
 var _grid = __webpack_require__(135);
 
@@ -12764,8 +12807,7 @@ var Sidebar = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Sidebar.__proto__ || Object.getPrototypeOf(Sidebar)).call(this, props));
 
     _this.state = {
-      intervalHandler: null,
-      sidebarOpen: true
+      intervalHandler: null
     };
     _this.oneStep = _this.oneStep.bind(_this);
     _this.isCollided = _this.isCollided.bind(_this);
@@ -12790,9 +12832,12 @@ var Sidebar = function (_React$Component) {
 
         if (_this2.isCollided(blocks, blockKeys, block)) {
           _this2.props.rotateBlock(block.id);
+          _this2.props.toggleCollision(block.id);
         } else if (_this2.isHittingWall(block)) {
           _this2.playSound(block.pos);
           _this2.props.reverseBlock(block.id);
+        } else if (block.collided) {
+          _this2.props.toggleCollision(block.id);
         }
         _this2.props.moveBlock(block.id);
       });
@@ -12851,41 +12896,48 @@ var Sidebar = function (_React$Component) {
   }, {
     key: 'toggleSidebar',
     value: function toggleSidebar() {
-      if (this.state.sidebarOpen) {
-        this.setState(sidebarOpen);
-      } else {
-        this.setState(sidebarOpen);
-      }
+      var menu = document.getElementById("menu");
+      menu.classList.toggle("menu-open");
     }
   }, {
     key: 'render',
     value: function render() {
       var buttonImg = this.state.intervalHandler ? "../../../assets/images/pause.png" : "../../../assets/images/play-button.png";
 
-      if (this.state.sidebarOpen) {
-        return _react2.default.createElement(
+      return _react2.default.createElement(
+        'div',
+        { id: 'menu' },
+        _react2.default.createElement('i', { className: 'fa fa-bars', onClick: this.toggleSidebar, 'aria-hidden': 'true' }),
+        _react2.default.createElement(
           'div',
-          null,
-          _react2.default.createElement('i', { className: 'fa fa-bars', onClick: this.toggleSidebar, 'aria-hidden': 'true' }),
+          { className: 'sidebar' },
+          _react2.default.createElement(
+            'h2',
+            null,
+            'NameOfApp'
+          ),
+          _react2.default.createElement('img', { className: 'play-button', onClick: this.togglePlay, src: buttonImg }),
+          _react2.default.createElement(
+            'button',
+            { className: 'reset-button', onClick: this.props.reset },
+            'Reset'
+          ),
           _react2.default.createElement(
             'div',
-            { className: 'sidebar' },
+            { className: 'icons' },
             _react2.default.createElement(
-              'p',
-              null,
-              'This is the sidebar!'
+              'a',
+              { href: 'https://github.com/clairewild' },
+              _react2.default.createElement('i', { className: 'fa fa-github', 'aria-hidden': 'true' })
             ),
-            _react2.default.createElement('img', { className: 'play-button', onClick: this.togglePlay, src: buttonImg }),
             _react2.default.createElement(
-              'button',
-              { className: 'reset-button', onClick: this.props.reset },
-              'Reset'
+              'a',
+              { href: 'https://www.linkedin.com/in/claire-wild-9b132484/' },
+              _react2.default.createElement('i', { className: 'fa fa-linkedin', 'aria-hidden': 'true' })
             )
           )
-        );
-      } else {
-        return _react2.default.createElement('i', { className: 'fa fa-bars', onClick: this.toggleSidebar, 'aria-hidden': 'true' });
-      }
+        )
+      );
     }
   }]);
 
@@ -12917,9 +12969,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _reactRedux = __webpack_require__(30);
+var _reactRedux = __webpack_require__(29);
 
-var _actions = __webpack_require__(25);
+var _actions = __webpack_require__(30);
 
 var _sidebar = __webpack_require__(137);
 
@@ -12944,6 +12996,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     moveBlock: function moveBlock(blockId) {
       return dispatch((0, _actions.moveBlock)(blockId));
+    },
+    toggleCollision: function toggleCollision(blockId) {
+      return dispatch((0, _actions.toggleCollision)(blockId));
     },
     reset: function reset() {
       return dispatch((0, _actions.reset)());
@@ -13001,7 +13056,7 @@ var _merge = __webpack_require__(37);
 
 var _merge2 = _interopRequireDefault(_merge);
 
-var _actions = __webpack_require__(25);
+var _actions = __webpack_require__(30);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -13039,7 +13094,8 @@ var BlockReducer = function BlockReducer() {
       block = {
         id: id,
         pos: action.pos,
-        direction: "up"
+        direction: "up",
+        collided: false
       };
       newState[id] = block;
       return newState;
@@ -13058,6 +13114,14 @@ var BlockReducer = function BlockReducer() {
       var x = block.pos[0];
       var y = block.pos[1];
       block.pos = [x + dx, y + dy];
+      return newState;
+    case _actions.TOGGLE_COLLISION:
+      block = newState[action.blockId];
+      if (block.collided) {
+        block.collided = false;
+      } else {
+        block.collided = true;
+      }
       return newState;
     case _actions.RESET:
       return {};
@@ -13129,7 +13193,7 @@ var _merge = __webpack_require__(37);
 
 var _merge2 = _interopRequireDefault(_merge);
 
-var _actions = __webpack_require__(25);
+var _actions = __webpack_require__(30);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -32577,7 +32641,7 @@ module.exports = baseFor;
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseGetTag = __webpack_require__(33),
-    isObjectLike = __webpack_require__(26);
+    isObjectLike = __webpack_require__(25);
 
 /** `Object#toString` result references. */
 var argsTag = '[object Arguments]';
@@ -32655,7 +32719,7 @@ module.exports = baseIsNative;
 
 var baseGetTag = __webpack_require__(33),
     isLength = __webpack_require__(92),
-    isObjectLike = __webpack_require__(26);
+    isObjectLike = __webpack_require__(25);
 
 /** `Object#toString` result references. */
 var argsTag = '[object Arguments]',
@@ -34222,7 +34286,7 @@ module.exports = constant;
 /***/ (function(module, exports, __webpack_require__) {
 
 var isArrayLike = __webpack_require__(51),
-    isObjectLike = __webpack_require__(26);
+    isObjectLike = __webpack_require__(25);
 
 /**
  * This method is like `_.isArrayLike` except that it also checks if `value`
@@ -34262,7 +34326,7 @@ module.exports = isArrayLikeObject;
 
 var baseGetTag = __webpack_require__(33),
     getPrototype = __webpack_require__(85),
-    isObjectLike = __webpack_require__(26);
+    isObjectLike = __webpack_require__(25);
 
 /** `Object#toString` result references. */
 var objectTag = '[object Object]';
@@ -34511,7 +34575,7 @@ module.exports = AutoFocusUtils;
 
 
 
-var EventPropagators = __webpack_require__(28);
+var EventPropagators = __webpack_require__(27);
 var ExecutionEnvironment = __webpack_require__(6);
 var FallbackCompositionState = __webpack_require__(243);
 var SyntheticCompositionEvent = __webpack_require__(285);
@@ -35116,8 +35180,8 @@ module.exports = CSSPropertyOperations;
 
 
 
-var EventPluginHub = __webpack_require__(27);
-var EventPropagators = __webpack_require__(28);
+var EventPluginHub = __webpack_require__(26);
+var EventPropagators = __webpack_require__(27);
 var ExecutionEnvironment = __webpack_require__(6);
 var ReactDOMComponentTree = __webpack_require__(5);
 var ReactUpdates = __webpack_require__(11);
@@ -35527,7 +35591,7 @@ module.exports = DefaultEventPluginOrder;
 
 
 
-var EventPropagators = __webpack_require__(28);
+var EventPropagators = __webpack_require__(27);
 var ReactDOMComponentTree = __webpack_require__(5);
 var SyntheticMouseEvent = __webpack_require__(40);
 
@@ -37180,7 +37244,7 @@ var DOMLazyTree = __webpack_require__(22);
 var DOMNamespaces = __webpack_require__(54);
 var DOMProperty = __webpack_require__(14);
 var DOMPropertyOperations = __webpack_require__(97);
-var EventPluginHub = __webpack_require__(27);
+var EventPluginHub = __webpack_require__(26);
 var EventPluginRegistry = __webpack_require__(38);
 var ReactBrowserEventEmitter = __webpack_require__(39);
 var ReactDOMComponentFlags = __webpack_require__(98);
@@ -40273,7 +40337,7 @@ module.exports = REACT_ELEMENT_TYPE;
 
 
 
-var EventPluginHub = __webpack_require__(27);
+var EventPluginHub = __webpack_require__(26);
 
 function runEventQueueInBatch(events) {
   EventPluginHub.enqueueEvents(events);
@@ -40511,7 +40575,7 @@ module.exports = ReactHostOperationHistoryHook;
 
 
 var DOMProperty = __webpack_require__(14);
-var EventPluginHub = __webpack_require__(27);
+var EventPluginHub = __webpack_require__(26);
 var EventPluginUtils = __webpack_require__(55);
 var ReactComponentEnvironment = __webpack_require__(58);
 var ReactEmptyComponent = __webpack_require__(100);
@@ -41623,7 +41687,7 @@ module.exports = SVGDOMPropertyConfig;
 
 
 
-var EventPropagators = __webpack_require__(28);
+var EventPropagators = __webpack_require__(27);
 var ExecutionEnvironment = __webpack_require__(6);
 var ReactDOMComponentTree = __webpack_require__(5);
 var ReactInputSelection = __webpack_require__(103);
@@ -41823,7 +41887,7 @@ module.exports = SelectEventPlugin;
 var _prodInvariant = __webpack_require__(3);
 
 var EventListener = __webpack_require__(76);
-var EventPropagators = __webpack_require__(28);
+var EventPropagators = __webpack_require__(27);
 var ReactDOMComponentTree = __webpack_require__(5);
 var SyntheticAnimationEvent = __webpack_require__(283);
 var SyntheticClipboardEvent = __webpack_require__(284);
@@ -41834,7 +41898,7 @@ var SyntheticMouseEvent = __webpack_require__(40);
 var SyntheticDragEvent = __webpack_require__(286);
 var SyntheticTouchEvent = __webpack_require__(290);
 var SyntheticTransitionEvent = __webpack_require__(291);
-var SyntheticUIEvent = __webpack_require__(29);
+var SyntheticUIEvent = __webpack_require__(28);
 var SyntheticWheelEvent = __webpack_require__(292);
 
 var emptyFunction = __webpack_require__(10);
@@ -42222,7 +42286,7 @@ module.exports = SyntheticDragEvent;
 
 
 
-var SyntheticUIEvent = __webpack_require__(29);
+var SyntheticUIEvent = __webpack_require__(28);
 
 /**
  * @interface FocusEvent
@@ -42305,7 +42369,7 @@ module.exports = SyntheticInputEvent;
 
 
 
-var SyntheticUIEvent = __webpack_require__(29);
+var SyntheticUIEvent = __webpack_require__(28);
 
 var getEventCharCode = __webpack_require__(62);
 var getEventKey = __webpack_require__(298);
@@ -42394,7 +42458,7 @@ module.exports = SyntheticKeyboardEvent;
 
 
 
-var SyntheticUIEvent = __webpack_require__(29);
+var SyntheticUIEvent = __webpack_require__(28);
 
 var getEventModifierState = __webpack_require__(63);
 
