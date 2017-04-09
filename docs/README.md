@@ -24,7 +24,7 @@ Users will be able to:
 - Click on a grid square to add a block
 - Click on a block to change it's direction by 90%
 - Click the play button to start the simulation
-- Here sounds when the blocks hit the walls
+- Hear sounds when the blocks hit the walls
 - Click a grid square to add a new block while the simulation is running
 - Click the stop button
 - Reset the grid
