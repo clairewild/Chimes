@@ -1,6 +1,6 @@
 import merge from 'lodash/merge';
 
-import { ADD_BLOCK, ROTATE_BLOCK, REVERSE_BLOCK, MOVE_BLOCK, TOGGLE_COLLISION, RESET } from '../actions/actions.js';
+import { ADD_BLOCK, ROTATE_BLOCK, REVERSE_BLOCK, MOVE_BLOCK, RESET } from '../actions/actions.js';
 
 const rotated = {
   "up": "right",
@@ -33,8 +33,7 @@ const BlockReducer = (state = {}, action) => {
       block = {
         id: id,
         pos: action.pos,
-        direction: "up",
-        collided: false
+        direction: "up"
       };
       newState[id] = block;
       return newState;
@@ -53,15 +52,6 @@ const BlockReducer = (state = {}, action) => {
       let x = block.pos[0];
       let y = block.pos[1];
       block.pos = [x + dx, y + dy];
-      return newState;
-    case TOGGLE_COLLISION:
-      block = newState[action.blockId];
-      if (block.collided) {
-        block.collided = false;
-      }
-      else {
-        block.collided = true;
-      }
       return newState;
     case RESET:
       return {};

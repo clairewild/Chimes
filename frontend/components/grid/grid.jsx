@@ -4,6 +4,7 @@ import { Rect, Stage, Layer } from 'react-konva';
 import Board from '../board.jsx';
 import CellContainer from '../cells/cell_container.js';
 import BlockContainer from '../blocks/block_container.js';
+import CollisionContainer from '../collisions/collision_container.js';
 
 class Grid extends React.Component {
   constructor(props) {
@@ -15,6 +16,11 @@ class Grid extends React.Component {
     this.handleMouseOver = this.handleMouseOver.bind(this);
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
     this.handleClick = this.handleClick.bind(this);
+  }
+
+  componentDidUpdate() {
+    // check collisions!!!
+    
   }
 
   handleMouseOver(e) {
@@ -109,6 +115,16 @@ class Grid extends React.Component {
     }
   }
 
+  renderCollisions() {
+    const collisions = this.props.collisions;
+
+    return (
+      collisions.map(collision => (
+        <CollisionContainer pos={ collision.pos } key={ collision.pos } />
+      ))
+    );
+  }
+
   render() {
     return (
       <div className="main">
@@ -124,6 +140,7 @@ class Grid extends React.Component {
             { this.renderCells() }
             { this.renderBlocks() }
             { this.renderHover() }
+            { this.renderCollisions() }
           </Layer>
         </Stage>
       </div>

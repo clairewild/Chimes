@@ -1,18 +1,20 @@
 import { connect } from 'react-redux';
 
-import { hover, addBlock, rotateBlock } from '../../actions/actions.js';
+import { addBlock, rotateBlock, toggleCollision, hover } from '../../actions/actions.js';
 import Grid from './grid.jsx';
 
 const mapStateToProps = state => ({
   cells: state.cells,
   blocks: state.blocks,
-  hoverPos: state.hover
+  hoverPos: state.hover,
+  collisions: state.collisions
 });
 
 const mapDispatchToProps = dispatch => ({
-  hover: pos => dispatch(hover(pos)),
   addBlock: pos => dispatch(addBlock(pos)),
-  rotateBlock: blockId => dispatch(rotateBlock(blockId))
+  rotateBlock: blockId => dispatch(rotateBlock(blockId)),
+  toggleCollision: pos => dispatch(toggleCollision(pos)),
+  hover: pos => dispatch(hover(pos))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Grid);

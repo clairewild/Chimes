@@ -1,17 +1,21 @@
 state = {
   cells: [
     {
-      pos: { x: 0, y: 1 }
+      pos: [x, y]
     }
   ],
   blocks: {
     1:
       {
         id: 1,
-        pos: { x: 0, y: 0 },
-        direction: "up",
-        collided: false
+        pos: [x, y],
+        direction: "up"
       }
   },
-  hover: { x: null, y: null }
+  hover: [null, null],
+  collisions: [
+    {
+      pos: [x, y]
+    }
+  ]
 }

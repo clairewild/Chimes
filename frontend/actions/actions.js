@@ -26,9 +26,9 @@ export const moveBlock = blockId => ({
   blockId
 });
 
-export const toggleCollision = blockId => ({
+export const toggleCollision = pos => ({
   type: TOGGLE_COLLISION,
-  blockId
+  pos
 });
 
 export const reset = () => ({
