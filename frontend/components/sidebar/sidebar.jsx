@@ -94,7 +94,7 @@ class Sidebar extends React.Component {
   }
 
   render() {
-    const buttonImg = (this.state.intervalHandler) ? "../../../assets/images/pause.png" : "../../../assets/images/play-button.png";
+    const buttonImg = (this.state.intervalHandler) ? "../../assets/images/pause.png" : "../../assets/images/play-button.png";
 
     return (
       <div id="menu">

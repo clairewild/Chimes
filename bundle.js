@@ -12324,8 +12324,8 @@ var Block = function (_React$Component) {
       dot: new Image()
     };
 
-    _this.state.arrow.src = "/../../../assets/images/^.png";
-    _this.state.dot.src = "/../../../assets/images/dot.png";
+    _this.state.arrow.src = "/../../assets/images/^.png";
+    _this.state.dot.src = "/../../assets/images/dot.png";
     return _this;
   }
 
@@ -12902,7 +12902,7 @@ var Sidebar = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var buttonImg = this.state.intervalHandler ? "../../../assets/images/pause.png" : "../../../assets/images/play-button.png";
+      var buttonImg = this.state.intervalHandler ? "../../assets/images/pause.png" : "../../assets/images/play-button.png";
 
       return _react2.default.createElement(
         'div',
