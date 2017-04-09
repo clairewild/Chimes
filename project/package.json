@@ -1,7 +1,7 @@
 {
   "name": "JavaScriptProject",
   "version": "1.0.0",
-  "main": "entry.js",
+  "main": "entry.jsx",
   "directories": {
     "test": "test"
   },

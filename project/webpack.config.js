@@ -1,7 +1,7 @@
 module.exports = {
   entry: "./frontend/entry.jsx",
   output: {
-    filename: "bundle.js"
+    filename: "./bundle.js"
   },
   resolve: {
     extensions: [".js", "*" ]
