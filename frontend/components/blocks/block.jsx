@@ -9,8 +9,8 @@ class Block extends React.Component {
       dot: new Image()
     }
 
-    this.state.arrow.src = "/../../assets/images/^.png";
-    this.state.dot.src = "/../../assets/images/dot.png";
+    this.state.arrow.src = "http://res.cloudinary.com/dq5kxnx9d/image/upload/v1491778125/qur71hxch7hkuozfd4gh.png";
+    this.state.dot.src = "http://res.cloudinary.com/dq5kxnx9d/image/upload/v1491778125/dot_jzanxh.png";
   }
 
   render() {
