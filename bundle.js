@@ -12945,15 +12945,15 @@ var Sidebar = function (_React$Component) {
 }(_react2.default.Component);
 
 var SOUNDS = {
-  0: "../../assets/sounds/e-note.mp3",
-  1: "../../assets/sounds/a-note.mp3",
-  2: "../../assets/sounds/b-note.mp3",
-  3: "../../assets/sounds/d-note.mp3",
-  4: "../../assets/sounds/highe-note.mp3",
-  5: "../../assets/sounds/g-note.mp3",
-  6: "../../assets/sounds/higha-note.mp3",
-  7: "../../assets/sounds/highb-note.mp3",
-  8: "../../assets/sounds/highd-note.mp3"
+  0: "http://res.cloudinary.com/dq5kxnx9d/video/upload/v1491778527/e-note_itvqpz.mp3",
+  1: "http://res.cloudinary.com/dq5kxnx9d/video/upload/v1491778526/a-note_sae2hh.mp3",
+  2: "http://res.cloudinary.com/dq5kxnx9d/video/upload/v1491778526/b-note_xn8ick.mp3",
+  3: "http://res.cloudinary.com/dq5kxnx9d/video/upload/v1491778526/d-note_ggcfia.mp3",
+  4: "http://res.cloudinary.com/dq5kxnx9d/video/upload/v1491778528/highe-note_oqjnoy.mp3",
+  5: "http://res.cloudinary.com/dq5kxnx9d/video/upload/v1491778527/g-note_ywaq8n.mp3",
+  6: "http://res.cloudinary.com/dq5kxnx9d/video/upload/v1491778527/higha-note_qzn1re.mp3",
+  7: "http://res.cloudinary.com/dq5kxnx9d/video/upload/v1491778527/highb-note_inm3qa.mp3",
+  8: "http://res.cloudinary.com/dq5kxnx9d/video/upload/v1491778528/highd-note_eeigjw.mp3"
 };
 
 exports.default = Sidebar;
