@@ -2,7 +2,7 @@ export const ADD_BLOCK = "ADD_BLOCK";
 export const ROTATE_BLOCK = "ROTATE_BLOCK";
 export const REVERSE_BLOCK = "REVERSE_BLOCK";
 export const MOVE_BLOCK = "MOVE_BLOCK";
-export const TOGGLE_COLLISION = "TOGGLE_COLLISION";
+export const ADD_COLLISION = "TOGGLE_COLLISION";
 export const RESET = "RESET";
 export const HOVER = "HOVER";
 
@@ -26,8 +26,8 @@ export const moveBlock = blockId => ({
   blockId
 });
 
-export const toggleCollision = pos => ({
-  type: TOGGLE_COLLISION,
+export const addCollision = pos => ({
+  type: ADD_COLLISION,
   pos
 });
 

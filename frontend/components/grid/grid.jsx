@@ -18,11 +18,6 @@ class Grid extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  componentDidUpdate() {
-    // check collisions!!!
-    
-  }
-
   handleMouseOver(e) {
     const pos = this.convertToPos(e);
     this.props.hover(pos);

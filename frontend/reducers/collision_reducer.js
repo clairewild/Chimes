@@ -1,14 +1,15 @@
-import merge from 'lodash/merge';
-
-import { TOGGLE_COLLISION } from '../actions/actions.js';
+import { ADD_COLLISION, RESET } from '../actions/actions.js';
 
 const CollisionReducer = (state = [], action) => {
   Object.freeze(state);
-  let newState = merge([], state);
 
   switch(action.type) {
-    case TOGGLE_COLLISION:
-
+    case ADD_COLLISION:
+      return [{
+        pos: action.pos
+      }];
+    case RESET:
+      return [];
     default:
       return state;
   }

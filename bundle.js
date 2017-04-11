@@ -3564,7 +3564,7 @@ var ADD_BLOCK = exports.ADD_BLOCK = "ADD_BLOCK";
 var ROTATE_BLOCK = exports.ROTATE_BLOCK = "ROTATE_BLOCK";
 var REVERSE_BLOCK = exports.REVERSE_BLOCK = "REVERSE_BLOCK";
 var MOVE_BLOCK = exports.MOVE_BLOCK = "MOVE_BLOCK";
-var TOGGLE_COLLISION = exports.TOGGLE_COLLISION = "TOGGLE_COLLISION";
+var ADD_COLLISION = exports.ADD_COLLISION = "TOGGLE_COLLISION";
 var RESET = exports.RESET = "RESET";
 var HOVER = exports.HOVER = "HOVER";
 
@@ -3596,9 +3596,9 @@ var moveBlock = exports.moveBlock = function moveBlock(blockId) {
   };
 };
 
-var toggleCollision = exports.toggleCollision = function toggleCollision(pos) {
+var addCollision = exports.addCollision = function addCollision(pos) {
   return {
-    type: TOGGLE_COLLISION,
+    type: ADD_COLLISION,
     pos: pos
   };
 };
@@ -12592,12 +12592,6 @@ var Grid = function (_React$Component) {
   }
 
   _createClass(Grid, [{
-    key: 'componentDidUpdate',
-    value: function componentDidUpdate() {
-      // check collisions!!!
-
-    }
-  }, {
     key: 'handleMouseOver',
     value: function handleMouseOver(e) {
       var pos = this.convertToPos(e);
@@ -12778,9 +12772,6 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     rotateBlock: function rotateBlock(blockId) {
       return dispatch((0, _actions.rotateBlock)(blockId));
     },
-    toggleCollision: function toggleCollision(pos) {
-      return dispatch((0, _actions.toggleCollision)(pos));
-    },
     hover: function hover(pos) {
       return dispatch((0, _actions.hover)(pos));
     }
@@ -12790,12 +12781,248 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_grid2.default);
 
 /***/ }),
-/* 137 */,
-/* 138 */
-/***/ (function(module, exports) {
+/* 137 */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-throw new Error("Module build failed: SyntaxError: Unexpected token, expected , (15:2)\n\n\u001b[0m \u001b[90m 13 | \u001b[39m  reverseBlock\u001b[33m:\u001b[39m blockId \u001b[33m=>\u001b[39m dispatch(reverseBlock(blockId))\u001b[33m,\u001b[39m\n \u001b[90m 14 | \u001b[39m  moveBlock\u001b[33m:\u001b[39m blockId \u001b[33m=>\u001b[39m dispatch(moveBlock(blockId))\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 15 | \u001b[39m  reset\u001b[33m:\u001b[39m () \u001b[33m=>\u001b[39m dispatch(reset())\n \u001b[90m    | \u001b[39m  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 16 | \u001b[39m})\u001b[33m;\u001b[39m\n \u001b[90m 17 | \u001b[39m\n \u001b[90m 18 | \u001b[39m\u001b[36mexport\u001b[39m \u001b[36mdefault\u001b[39m connect(mapStateToProps\u001b[33m,\u001b[39m mapDispatchToProps)(\u001b[33mSidebar\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n");
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(9);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _merge = __webpack_require__(37);
+
+var _merge2 = _interopRequireDefault(_merge);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Sidebar = function (_React$Component) {
+  _inherits(Sidebar, _React$Component);
+
+  function Sidebar(props) {
+    _classCallCheck(this, Sidebar);
+
+    var _this = _possibleConstructorReturn(this, (Sidebar.__proto__ || Object.getPrototypeOf(Sidebar)).call(this, props));
+
+    _this.state = {
+      intervalHandler: null
+    };
+
+    _this.oneStep = _this.oneStep.bind(_this);
+    _this.isCollided = _this.isCollided.bind(_this);
+    _this.isHittingWall = _this.isHittingWall.bind(_this);
+    _this.playSound = _this.playSound.bind(_this);
+    _this.togglePlay = _this.togglePlay.bind(_this);
+    _this.toggleSidebar = _this.toggleSidebar.bind(_this);
+    return _this;
+  }
+
+  _createClass(Sidebar, [{
+    key: 'oneStep',
+    value: function oneStep() {
+      var _this2 = this;
+
+      var blocks = this.props.blocks;
+      var blockKeys = Object.keys(blocks);
+      var block = void 0;
+
+      blockKeys.forEach(function (key) {
+        block = blocks[key];
+
+        if (_this2.isCollided(blocks, blockKeys, block)) {
+          _this2.props.addCollision(block.pos);
+          _this2.props.rotateBlock(block.id);
+        } else if (_this2.isHittingWall(block)) {
+          _this2.playSound(block.pos);
+          _this2.props.reverseBlock(block.id);
+        }
+        _this2.props.moveBlock(block.id);
+      });
+    }
+  }, {
+    key: 'isCollided',
+    value: function isCollided(blocks, blockKeys, block) {
+      var x = block.pos[0];
+      var y = block.pos[1];
+      var res = false;
+
+      blockKeys.forEach(function (key) {
+        if (key != block.id) {
+          if (x === blocks[key].pos[0] && y === blocks[key].pos[1]) {
+            res = true;
+          }
+        }
+      });
+      return res;
+    }
+  }, {
+    key: 'isHittingWall',
+    value: function isHittingWall(block) {
+      var x = block.pos[0];
+      var y = block.pos[1];
+      var dir = block.direction;
+
+      if (dir === "up") {
+        return y === 0;
+      } else if (dir === "down") {
+        return y === 8;
+      } else if (dir === "left") {
+        return x === 0;
+      } else {
+        return x === 8;
+      }
+    }
+  }, {
+    key: 'playSound',
+    value: function playSound(pos) {
+      var soundFile = void 0;
+      if (pos[0] === 0 || pos[0] === 8) {
+        soundFile = SOUNDS[pos[1]];
+      } else {
+        soundFile = SOUNDS[pos[0]];
+      }
+      var note = new Audio(soundFile);
+      note.volume = 0.1;
+      note.play();
+    }
+  }, {
+    key: 'togglePlay',
+    value: function togglePlay() {
+      if (this.state.intervalHandler) {
+        window.clearInterval(this.state.intervalHandler);
+        this.setState({ intervalHandler: null });
+      } else {
+        var handler = window.setInterval(this.oneStep, 250);
+        this.setState({ intervalHandler: handler });
+      }
+    }
+  }, {
+    key: 'toggleSidebar',
+    value: function toggleSidebar() {
+      var menu = document.getElementById("menu");
+      menu.classList.toggle("menu-open");
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var buttonImg = this.state.intervalHandler ? "http://res.cloudinary.com/dq5kxnx9d/image/upload/v1491778125/pause_fdkwav.png" : "http://res.cloudinary.com/dq5kxnx9d/image/upload/v1491778125/play-button_yg1xeu.png";
+
+      return _react2.default.createElement(
+        'div',
+        { id: 'menu' },
+        _react2.default.createElement('i', { className: 'fa fa-bars', onClick: this.toggleSidebar, 'aria-hidden': 'true' }),
+        _react2.default.createElement(
+          'div',
+          { className: 'sidebar' },
+          _react2.default.createElement(
+            'h2',
+            null,
+            'NameOfApp'
+          ),
+          _react2.default.createElement('img', { className: 'play-button', onClick: this.togglePlay, src: buttonImg }),
+          _react2.default.createElement(
+            'button',
+            { className: 'reset-button', onClick: this.props.reset },
+            'Reset'
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'icons' },
+            _react2.default.createElement(
+              'a',
+              { href: 'https://github.com/clairewild' },
+              _react2.default.createElement('i', { className: 'fa fa-github', 'aria-hidden': 'true' })
+            ),
+            _react2.default.createElement(
+              'a',
+              { href: 'https://www.linkedin.com/in/claire-wild-9b132484/' },
+              _react2.default.createElement('i', { className: 'fa fa-linkedin', 'aria-hidden': 'true' })
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return Sidebar;
+}(_react2.default.Component);
+
+var SOUNDS = {
+  0: "../../assets/sounds/e-note.mp3",
+  1: "../../assets/sounds/a-note.mp3",
+  2: "../../assets/sounds/b-note.mp3",
+  3: "../../assets/sounds/d-note.mp3",
+  4: "../../assets/sounds/highe-note.mp3",
+  5: "../../assets/sounds/g-note.mp3",
+  6: "../../assets/sounds/higha-note.mp3",
+  7: "../../assets/sounds/highb-note.mp3",
+  8: "../../assets/sounds/highd-note.mp3"
+};
+
+exports.default = Sidebar;
+
+/***/ }),
+/* 138 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRedux = __webpack_require__(29);
+
+var _actions = __webpack_require__(30);
+
+var _sidebar = __webpack_require__(137);
+
+var _sidebar2 = _interopRequireDefault(_sidebar);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    blocks: state.blocks,
+    collisions: state.collisions
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    rotateBlock: function rotateBlock(blockId) {
+      return dispatch((0, _actions.rotateBlock)(blockId));
+    },
+    reverseBlock: function reverseBlock(blockId) {
+      return dispatch((0, _actions.reverseBlock)(blockId));
+    },
+    moveBlock: function moveBlock(blockId) {
+      return dispatch((0, _actions.moveBlock)(blockId));
+    },
+    addCollision: function addCollision(pos) {
+      return dispatch((0, _actions.addCollision)(pos));
+    },
+    reset: function reset() {
+      return dispatch((0, _actions.reset)());
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_sidebar2.default);
 
 /***/ }),
 /* 139 */
@@ -46193,24 +46420,21 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _merge = __webpack_require__(37);
-
-var _merge2 = _interopRequireDefault(_merge);
-
 var _actions = __webpack_require__(30);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var CollisionReducer = function CollisionReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var action = arguments[1];
 
   Object.freeze(state);
-  var newState = (0, _merge2.default)([], state);
 
   switch (action.type) {
-    case _actions.TOGGLE_COLLISION:
-
+    case _actions.ADD_COLLISION:
+      return [{
+        pos: action.pos
+      }];
+    case _actions.RESET:
+      return [];
     default:
       return state;
   }

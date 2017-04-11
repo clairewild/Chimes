@@ -7,6 +7,7 @@ class Sidebar extends React.Component {
     this.state = {
       intervalHandler: null
     };
+
     this.oneStep = this.oneStep.bind(this);
     this.isCollided = this.isCollided.bind(this);
     this.isHittingWall = this.isHittingWall.bind(this);
@@ -24,6 +25,7 @@ class Sidebar extends React.Component {
       block = blocks[key];
 
       if (this.isCollided(blocks, blockKeys, block)) {
+        this.props.addCollision(block.pos);
         this.props.rotateBlock(block.id);
       }
       else if (this.isHittingWall(block)) {
@@ -35,23 +37,25 @@ class Sidebar extends React.Component {
   }
 
   isCollided(blocks, blockKeys, block) {
-    let x = block.pos[0];
-    let y = block.pos[1];
+    const x = block.pos[0];
+    const y = block.pos[1];
     let res = false;
+
     blockKeys.forEach(key => {
       if (key != block.id) {
-        if (blocks[key].pos[0] === x && blocks[key].pos[1] === y) {
+        if (x === blocks[key].pos[0] && y === blocks[key].pos[1]) {
           res = true;
         }
       }
     });
     return res;
-  } // change this to check collisions in state!!!!
+  }
 
   isHittingWall(block) {
-    let x = block.pos[0];
-    let y = block.pos[1];
-    let dir = block.direction;
+    const x = block.pos[0];
+    const y = block.pos[1];
+    const dir = block.direction;
+
     if (dir === "up") {
       return y === 0;
     }
