@@ -9,23 +9,23 @@ class Sidebar extends React.Component {
     };
 
     this.oneStep = this.oneStep.bind(this);
-    this.isCollided = this.isCollided.bind(this);
-    this.isHittingWall = this.isHittingWall.bind(this);
-    this.playSound = this.playSound.bind(this);
+    this.findFutureCollision = this.findFutureCollision.bind(this);
     this.togglePlay = this.togglePlay.bind(this);
-    this.toggleSidebar = this.toggleSidebar.bind(this);
   }
 
   oneStep() {
     const blocks = this.props.blocks;
     const blockKeys = Object.keys(blocks);
-    let block;
 
     blockKeys.forEach(key => {
-      block = blocks[key];
+      let block = blocks[key];
+      let collisionPos = this.findFutureCollision(blocks, blockKeys, block);
 
-      if (this.isCollided(blocks, blockKeys, block)) {
-        this.props.addCollision(block.pos);
+      if (collisionPos) {
+        this.props.addCollision(collisionPos);
+      }
+      else if (this.isCollided(blocks, blockKeys, block)) {
+        this.props.shiftCollisions();
         this.props.rotateBlock(block.id);
       }
       else if (this.isHittingWall(block)) {
@@ -34,6 +34,40 @@ class Sidebar extends React.Component {
       }
       this.props.moveBlock(block.id);
     });
+  }
+
+  findFutureCollision(blocks, blockKeys, block) {
+    let collisionPos;
+    blockKeys.forEach(key => {
+      if (key != block.id) {
+        collisionPos = this.collisionPos(block, blocks[key]);
+      }
+    });
+    return collisionPos;
+  }
+
+  collisionPos(block1, block2) {
+    const x = block1.pos[0];
+    const y = block1.pos[1];
+
+    switch(block1.direction) {
+      case "up":
+        if (block2.direction === "down" && block1.pos[0] === block2.pos[0] && block1.pos[1] === block2.pos[1] + 2) {
+          return [x, y - 1];
+        }
+      case "down":
+        if (block2.direction === "up" && block1.pos[0] === block2.pos[0] && block1.pos[1] === block2.pos[1] - 2) {
+          return [x, y + 1];
+        }
+      case "left":
+        if (block2.direction === "right" && block1.pos[1] === block2.pos[1] && block1.pos[0] === block2.pos[0] + 2) {
+          return [x - 1, y];
+        }
+      case "right":
+        if (block2.direction === "left" && block1.pos[1] === block2.pos[1] && block1.pos[0] === block2.pos[0] - 2) {
+          return [x + 1, y];
+        }
+    }
   }
 
   isCollided(blocks, blockKeys, block) {
@@ -54,19 +88,16 @@ class Sidebar extends React.Component {
   isHittingWall(block) {
     const x = block.pos[0];
     const y = block.pos[1];
-    const dir = block.direction;
 
-    if (dir === "up") {
-      return y === 0;
-    }
-    else if (dir === "down") {
-      return y === 8;
-    }
-    else if (dir === "left") {
-      return x === 0;
-    }
-    else {
-      return x === 8;
+    switch(block.direction) {
+      case "up":
+        return y === 0;
+      case "down":
+        return y === 8;
+      case "left":
+        return x === 0;
+      case "right":
+        return x === 8;
     }
   }
 
