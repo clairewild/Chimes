@@ -9,7 +9,7 @@ class Sidebar extends React.Component {
     };
 
     this.oneStep = this.oneStep.bind(this);
-    this.findFutureCollision = this.findFutureCollision.bind(this);
+    this.checkCollisions = this.checkCollisions.bind(this);
     this.togglePlay = this.togglePlay.bind(this);
   }
 
@@ -17,33 +17,34 @@ class Sidebar extends React.Component {
     const blocks = this.props.blocks;
     const blockKeys = Object.keys(blocks);
 
+    this.checkCollisions(blocks, blockKeys);
+
     blockKeys.forEach(key => {
       let block = blocks[key];
-      let collisionPos = this.findFutureCollision(blocks, blockKeys, block);
 
-      if (collisionPos) {
-        this.props.addCollision(collisionPos);
-      }
-      else if (this.isCollided(blocks, blockKeys, block)) {
-        this.props.shiftCollisions();
+      if (this.isCollided(blocks, blockKeys, block)) {
+        this.props.deleteCollision(block.pos); // could have collision unmount itself
         this.props.rotateBlock(block.id);
       }
       else if (this.isHittingWall(block)) {
         this.playSound(block.pos);
+        this.props.addRipple(block.pos);
         this.props.reverseBlock(block.id);
       }
       this.props.moveBlock(block.id);
     });
   }
 
-  findFutureCollision(blocks, blockKeys, block) {
+  checkCollisions(blocks, blockKeys) {
     let collisionPos;
-    blockKeys.forEach(key => {
-      if (key != block.id) {
-        collisionPos = this.collisionPos(block, blocks[key]);
+    for (let i = 0; i < blockKeys.length - 1; i++) {
+      for (let j = i + 1; j < blockKeys.length; j++) {
+        collisionPos = this.collisionPos(blocks[i], blocks[j]);
+        if (collisionPos) {
+          this.props.addCollision(collisionPos);
+        }
       }
-    });
-    return collisionPos;
+    }
   }
 
   collisionPos(block1, block2) {

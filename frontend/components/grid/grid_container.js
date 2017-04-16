@@ -7,7 +7,8 @@ const mapStateToProps = state => ({
   cells: state.cells,
   blocks: state.blocks,
   hoverPos: state.hover,
-  collisions: state.collisions
+  collisions: state.collisions,
+  ripples: state.ripples
 });
 
 const mapDispatchToProps = dispatch => ({

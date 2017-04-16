@@ -3042,7 +3042,7 @@ var ROTATE_BLOCK = exports.ROTATE_BLOCK = "ROTATE_BLOCK";
 var REVERSE_BLOCK = exports.REVERSE_BLOCK = "REVERSE_BLOCK";
 var MOVE_BLOCK = exports.MOVE_BLOCK = "MOVE_BLOCK";
 var ADD_COLLISION = exports.ADD_COLLISION = "TOGGLE_COLLISION";
-var DELETE_COLLISIONS = exports.DELETE_COLLISIONS = "DELETE_COLLISIONS";
+var DELETE_COLLISION = exports.DELETE_COLLISION = "DELETE_COLLISIONS";
 var RESET = exports.RESET = "RESET";
 var HOVER = exports.HOVER = "HOVER";
 
@@ -3081,9 +3081,10 @@ var addCollision = exports.addCollision = function addCollision(pos) {
   };
 };
 
-var deleteCollisions = exports.deleteCollisions = function deleteCollisions() {
+var deleteCollision = exports.deleteCollision = function deleteCollision(pos) {
   return {
-    type: DELETE_COLLISIONS
+    type: DELETE_COLLISION,
+    pos: pos
   };
 };
 
@@ -12771,7 +12772,7 @@ var Grid = function (_React$Component) {
       var blockKeys = Object.keys(blocks);
 
       return blockKeys.map(function (key) {
-        return _react2.default.createElement(_block_container2.default, { pos: blocks[key].pos, direction: blocks[key].direction, collided: blocks[key].collided, key: key });
+        return _react2.default.createElement(_block_container2.default, { pos: blocks[key].pos, direction: blocks[key].direction, key: key });
       });
     }
   }, {
@@ -12796,9 +12797,10 @@ var Grid = function (_React$Component) {
     key: 'renderCollisions',
     value: function renderCollisions() {
       var collisions = this.props.collisions;
+      var collisionKeys = Object.keys(collisions);
 
-      return collisions.map(function (collision) {
-        return _react2.default.createElement(_collision_container2.default, { pos: collision.pos, key: collision.pos });
+      return collisionKeys.map(function (key) {
+        return _react2.default.createElement(_collision_container2.default, { pos: collisions[key].pos, key: collisions[key].pos });
       });
     }
   }, {
@@ -12923,7 +12925,7 @@ var Sidebar = function (_React$Component) {
     };
 
     _this.oneStep = _this.oneStep.bind(_this);
-    _this.findFutureCollision = _this.findFutureCollision.bind(_this);
+    _this.checkCollisions = _this.checkCollisions.bind(_this);
     _this.togglePlay = _this.togglePlay.bind(_this);
     return _this;
   }
@@ -12936,14 +12938,13 @@ var Sidebar = function (_React$Component) {
       var blocks = this.props.blocks;
       var blockKeys = Object.keys(blocks);
 
+      this.checkCollisions(blocks, blockKeys);
+
       blockKeys.forEach(function (key) {
         var block = blocks[key];
-        var collisionPos = _this2.findFutureCollision(blocks, blockKeys, block);
 
-        if (collisionPos) {
-          _this2.props.addCollision(collisionPos);
-        } else if (_this2.isCollided(blocks, blockKeys, block)) {
-          _this2.props.shiftCollisions();
+        if (_this2.isCollided(blocks, blockKeys, block)) {
+          _this2.props.deleteCollision(block.pos);
           _this2.props.rotateBlock(block.id);
         } else if (_this2.isHittingWall(block)) {
           _this2.playSound(block.pos);
@@ -12953,17 +12954,17 @@ var Sidebar = function (_React$Component) {
       });
     }
   }, {
-    key: 'findFutureCollision',
-    value: function findFutureCollision(blocks, blockKeys, block) {
-      var _this3 = this;
-
+    key: 'checkCollisions',
+    value: function checkCollisions(blocks, blockKeys) {
       var collisionPos = void 0;
-      blockKeys.forEach(function (key) {
-        if (key != block.id) {
-          collisionPos = _this3.collisionPos(block, blocks[key]);
+      for (var i = 0; i < blockKeys.length - 1; i++) {
+        for (var j = i + 1; j < blockKeys.length; j++) {
+          collisionPos = this.collisionPos(blocks[i], blocks[j]);
+          if (collisionPos) {
+            this.props.addCollision(collisionPos);
+          }
         }
-      });
-      return collisionPos;
+      }
     }
   }, {
     key: 'collisionPos',
@@ -13154,8 +13155,8 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     addCollision: function addCollision(pos) {
       return dispatch((0, _actions.addCollision)(pos));
     },
-    deleteCollisions: function deleteCollisions() {
-      return dispatch((0, _actions.deleteCollisions)());
+    deleteCollision: function deleteCollision(pos) {
+      return dispatch((0, _actions.deleteCollision)(pos));
     },
     reset: function reset() {
       return dispatch((0, _actions.reset)());
@@ -13300,21 +13301,23 @@ var _actions = __webpack_require__(26);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var CollisionReducer = function CollisionReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments[1];
 
   Object.freeze(state);
-  var newState = (0, _merge2.default)([], state);
+  var newState = (0, _merge2.default)({}, state);
+  var key = String(action.pos);
   switch (action.type) {
     case _actions.ADD_COLLISION:
-      newState.push({
+      newState[key] = {
         pos: action.pos
-      });
+      };
       return newState;
-    case _actions.DELETE_COLLISIONS:
-      return [];
+    case _actions.DELETE_COLLISION:
+      delete newState[key];
+      return newState;
     case _actions.RESET:
-      return [];
+      return {};
     default:
       return state;
   }

@@ -1,5 +1,3 @@
-import merge from 'lodash/merge';
-
 import { HOVER } from '../actions/actions.js';
 
 const HoverReducer = (state = [null, null], action) => {

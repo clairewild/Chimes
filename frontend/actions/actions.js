@@ -3,7 +3,9 @@ export const ROTATE_BLOCK = "ROTATE_BLOCK";
 export const REVERSE_BLOCK = "REVERSE_BLOCK";
 export const MOVE_BLOCK = "MOVE_BLOCK";
 export const ADD_COLLISION = "TOGGLE_COLLISION";
-export const DELETE_COLLISIONS = "DELETE_COLLISIONS";
+export const DELETE_COLLISION = "DELETE_COLLISIONS";
+export const ADD_RIPPLE = "ADD_RIPPLE";
+export const DELETE_RIPPLE = "DELETE_RIPPLE";
 export const RESET = "RESET";
 export const HOVER = "HOVER";
 
@@ -32,8 +34,19 @@ export const addCollision = pos => ({
   pos
 });
 
-export const deleteCollisions = () => ({
-  type: DELETE_COLLISIONS
+export const deleteCollision = pos => ({
+  type: DELETE_COLLISION,
+  pos
+});
+
+export const addRipple = pos => ({
+  type: ADD_RIPPLE,
+  pos
+});
+
+export const deleteRipple = pos => ({
+  type: DELETE_RIPPLE,
+  pos
 });
 
 export const reset = () => ({
@@ -43,4 +56,4 @@ export const reset = () => ({
 export const hover = pos => ({
   type: HOVER,
   pos
-})
+});

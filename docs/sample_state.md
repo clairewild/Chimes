@@ -13,9 +13,16 @@ state = {
       }
   },
   hover: [null, null],
-  collisions: [
-    {
-      pos: [x, y]
-    }
-  ]
+  collisions: {
+    "x,y":
+      {
+        pos: [x, y]
+      }  
+  },
+  ripples: {
+    "x,y":
+      {
+        pos: [x, y]
+      }
+  }
 }

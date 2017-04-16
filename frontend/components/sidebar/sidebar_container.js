@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { rotateBlock, reverseBlock, moveBlock, addCollision, deleteCollisions, reset } from '../../actions/actions.js';
+import { rotateBlock, reverseBlock, moveBlock, addCollision, deleteCollision, addRipple, reset } from '../../actions/actions.js';
 import Sidebar from './sidebar.jsx';
 
 const mapStateToProps = state => ({
@@ -13,7 +13,8 @@ const mapDispatchToProps = dispatch => ({
   reverseBlock: blockId => dispatch(reverseBlock(blockId)),
   moveBlock: blockId => dispatch(moveBlock(blockId)),
   addCollision: pos => dispatch(addCollision(pos)),
-  deleteCollisions: () => dispatch(deleteCollisions()),
+  deleteCollision: pos => dispatch(deleteCollision(pos)),
+  addRipple: pos => dispatch(addRipple(pos)),
   reset: () => dispatch(reset())
 });
 

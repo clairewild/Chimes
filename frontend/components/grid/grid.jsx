@@ -2,9 +2,10 @@ import React from 'react';
 import { Rect, Stage, Layer } from 'react-konva';
 
 import Board from '../board.jsx';
-import CellContainer from '../cells/cell_container.js';
-import BlockContainer from '../blocks/block_container.js';
-import CollisionContainer from '../collisions/collision_container.js';
+import Cell from '../cells/cell.jsx';
+import Block from '../blocks/block.jsx';
+import Collision from '../collisions/collision.jsx';
+import RippleContainer from '../ripples/ripple_container.js';
 
 class Grid extends React.Component {
   constructor(props) {
@@ -62,7 +63,7 @@ class Grid extends React.Component {
 
     return (
       cells.map(cell => (
-        <CellContainer pos={ cell.pos } key={ cell.pos } />
+        <Cell pos={ cell.pos } key={ cell.pos } />
       ))
     );
   }
@@ -84,7 +85,7 @@ class Grid extends React.Component {
 
     return (
       blockKeys.map(key => (
-        <BlockContainer pos={ blocks[key].pos } direction={ blocks[key].direction } collided={ blocks[key].collided } key={ key } />
+        <Block pos={ blocks[key].pos } direction={ blocks[key].direction } key={ key } />
       ))
     );
   }
@@ -112,10 +113,22 @@ class Grid extends React.Component {
 
   renderCollisions() {
     const collisions = this.props.collisions;
+    const collisionKeys = Object.keys(collisions);
 
     return (
-      collisions.map(collision => (
-        <CollisionContainer pos={ collision.pos } key={ collision.pos } />
+      collisionKeys.map(key => (
+        <Collision pos={ collisions[key].pos } key={ collisions[key].pos } />
+      ))
+    );
+  }
+
+  renderRipples() {
+    const ripples = this.props.ripples;
+    const rippleKeys = Object.keys(ripples);
+
+    return (
+      rippleKeys.map(key => (
+        <RippleContainer pos={ ripples[key].pos } key={ ripples[key].pos } />
       ))
     );
   }
@@ -130,12 +143,13 @@ class Grid extends React.Component {
           onClick={ this.handleClick }
           width={ 630 }
           height={ 630 }>
-          <Layer>
+          <Layer id="layer">
             <Board width={ 630 } height={ 630 } />
             { this.renderCells() }
             { this.renderBlocks() }
             { this.renderHover() }
             { this.renderCollisions() }
+            { this.renderRipples() }
           </Layer>
         </Stage>
       </div>

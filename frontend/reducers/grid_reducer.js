@@ -1,5 +1,3 @@
-import merge from 'lodash/merge';
-
 const gridSize = 9;
 
 const grid = Object.freeze({
