@@ -143,7 +143,7 @@ class Grid extends React.Component {
           onClick={ this.handleClick }
           width={ 630 }
           height={ 630 }>
-          <Layer id="layer">
+          <Layer>
             <Board width={ 630 } height={ 630 } />
             { this.renderCells() }
             { this.renderBlocks() }
