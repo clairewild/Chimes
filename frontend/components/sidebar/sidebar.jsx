@@ -158,15 +158,15 @@ class Sidebar extends React.Component {
 }
 
 const SOUNDS = {
-  0: "../../assets/sounds/e-note.mp3",
-  1: "../../assets/sounds/a-note.mp3",
-  2: "../../assets/sounds/b-note.mp3",
-  3: "../../assets/sounds/d-note.mp3",
-  4: "../../assets/sounds/highe-note.mp3",
-  5: "../../assets/sounds/g-note.mp3",
-  6: "../../assets/sounds/higha-note.mp3",
-  7: "../../assets/sounds/highb-note.mp3",
-  8: "../../assets/sounds/highd-note.mp3"
+  0: "https://raw.githubusercontent.com/clairewild/Chimes/master/assets/sounds/e-note.mp3",
+  1: "https://raw.githubusercontent.com/clairewild/Chimes/master/assets/sounds/a-note.mp3",
+  2: "https://raw.githubusercontent.com/clairewild/Chimes/master/assets/sounds/b-note.mp3",
+  3: "https://raw.githubusercontent.com/clairewild/Chimes/master/assets/sounds/d-note.mp3",
+  4: "https://raw.githubusercontent.com/clairewild/Chimes/master/assets/sounds/highe-note.mp3",
+  5: "https://raw.githubusercontent.com/clairewild/Chimes/master/assets/sounds/g-note.mp3",
+  6: "https://raw.githubusercontent.com/clairewild/Chimes/master/assets/sounds/higha-note.mp3",
+  7: "https://raw.githubusercontent.com/clairewild/Chimes/master/assets/sounds/highb-note.mp3",
+  8: "https://raw.githubusercontent.com/clairewild/Chimes/master/assets/sounds/highd-note.mp3"
 };
 
 export default Sidebar;
