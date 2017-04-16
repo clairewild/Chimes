@@ -4,7 +4,7 @@ import { Rect, Stage, Layer } from 'react-konva';
 import Board from '../board.jsx';
 import Cell from '../cells/cell.jsx';
 import Block from '../blocks/block.jsx';
-import Collision from '../collisions/collision.jsx';
+import CollisionContainer from '../collisions/collision_container.js';
 import RippleContainer from '../ripples/ripple_container.js';
 
 class Grid extends React.Component {
@@ -117,7 +117,7 @@ class Grid extends React.Component {
 
     return (
       collisionKeys.map(key => (
-        <Collision pos={ collisions[key].pos } key={ collisions[key].pos } />
+        <CollisionContainer pos={ collisions[key].pos } key={ collisions[key].pos } />
       ))
     );
   }

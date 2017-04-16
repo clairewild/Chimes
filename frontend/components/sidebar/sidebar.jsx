@@ -23,7 +23,6 @@ class Sidebar extends React.Component {
       let block = blocks[key];
 
       if (this.isCollided(blocks, blockKeys, block)) {
-        this.props.deleteCollision(block.pos); // could have collision unmount itself
         this.props.rotateBlock(block.id);
       }
       else if (this.isHittingWall(block)) {
@@ -139,7 +138,7 @@ class Sidebar extends React.Component {
         <i className="fa fa-bars" onClick={ this.toggleSidebar } aria-hidden="true"></i>
 
         <div className="sidebar">
-          <h2>NameOfApp</h2>
+          <h2>Chimes</h2>
           <img className="play-button" onClick={ this.togglePlay } src={ buttonImg } />
           <button className="reset-button" onClick={ this.props.reset }>Reset</button>
 

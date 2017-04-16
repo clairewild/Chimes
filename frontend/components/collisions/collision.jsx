@@ -11,6 +11,10 @@ class Collision extends React.Component {
     this.state.image.src = "http://res.cloudinary.com/dq5kxnx9d/image/upload/v1491778125/dot_jzanxh.png";
   }
 
+  componentDidMount() {
+    window.setTimeout(() => this.props.deleteCollision(this.props.pos), 250);
+  }
+
   render() {
     const size = 70;
 
