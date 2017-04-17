@@ -17,7 +17,7 @@ Solution:
 
 Bug:
 - trying to render collisions
-- started off rendering collision component in the oneStep method in Sidebar, where blocks move
+- started off rendering collision component in oneStep method in Sidebar, where blocks move
 - dispatching an action to add collision
 - collisions rendered a space behind where the blocks had just been instead of where they were going to collide
 - didn't work because that method all happens at once and then waits before rendering, setInterval
