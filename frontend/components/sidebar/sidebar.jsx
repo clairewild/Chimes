@@ -138,7 +138,7 @@ class Sidebar extends React.Component {
         <i className="fa fa-bars" onClick={ this.toggleSidebar } aria-hidden="true"></i>
 
         <div className="sidebar">
-          <h2>Chimes</h2>
+          <h2>Play Track</h2>
           <img className="play-button" onClick={ this.togglePlay } src={ buttonImg } />
           <button className="reset-button" onClick={ this.props.reset }>Reset</button>
 

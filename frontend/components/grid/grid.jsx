@@ -80,8 +80,8 @@ class Grid extends React.Component {
     if (this.state.instructions) {
       return (
         <div className="instructions">
-          <h3><i className="fa fa-music" aria-hidden="true"></i>  Click Here</h3>
-          <p>( then press play )</p>
+          <h3><i className="fa fa-music" aria-hidden="true"></i>   Chimes</h3>
+          <p>( click anywhere + press play )</p>
         </div>
       );
     }
