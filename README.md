@@ -23,9 +23,46 @@ This project is built using React.js, HTML5 canvas, and React Konva, a JavaScrip
 
 ## Features and Implementation
 
-### (feature 1)
+### Block Logic
 
-### (feature 2)
+
+
+
+
+### Ripple Animations
+
+The ripple effect when a block plays a note is created by a Ripple component that renders three konva Circle elements.  The position of a ripple is added to the state by the Sidebar component (which contains all the block moving logic and checks when a block is hitting the wall).  Ripple components then delete themselves from the state after a setTimeout.
+
+I used Konva.Easings to animate the ripples.  In componentDidMount(), each circle starts expanding to a larger size over a set duration.  The largest circle has a set final size, and the smaller circles grow to a random size less than the largest circle.  The code looks something like this:
+
+```jsx
+componentDidMount() {
+  const maxSize = 700;
+
+  this.refs.ripple.to({
+    width: maxSize,
+    height: maxSize,
+    easing: Konva.Easings.EaseInOut,
+    duration: 1.2
+  });
+  window.setTimeout(() => this.props.deleteRipple(this.props.pos), 1200);
+}
+
+render() {
+  const size = 70;
+
+  return(
+    <Circle
+      ref="ripple"
+      x={ this.props.pos[0] * size + size / 2 }
+      y={ this.props.pos[1] * size + size / 2 }
+      radius={ 5 }
+      stroke="white"
+      strokeWidth={ 1 }>
+    </Circle>
+  );
+};
+```
 
 ## Future Features
 

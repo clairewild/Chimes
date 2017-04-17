@@ -14,3 +14,18 @@ Solution:
 - why you couldn't see that the block was rotating, there was another on top of it
 - moved all my click handlers to the grid component file, checking to see if there was already a block at that position
 - if there was, I'd rotate it, if not, I'd add a new block
+
+Bug:
+- trying to render collisions
+- started off rendering collision component in the oneStep method in Sidebar, where blocks move
+- dispatching an action to add collision
+- collisions rendered a space behind where the blocks had just been instead of where they were going to collide
+- didn't work because that method all happens at once and then waits before rendering, setInterval
+
+Solution:
+- wrote a willCollide method
+- lots of refactoring, decided to checkCollisions before iterating through all blocks to check other things and move them
+- worked, but Collision components would be added and then never disappear
+- dispatched deleteCollision action when blocks actually collided
+- because of lag sometimes didn't happen fast enough and Collision elements would still build up when there were too many blocks
+- solved by having the Collision components delete themselves after a setTimeout that was the same length as the onStep interval (how long it takes for the blocks to move)
