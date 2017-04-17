@@ -19,6 +19,13 @@ class Grid extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
+  openSidebar() {
+    const menu = document.getElementById("menu");
+    if (!menu.classList.contains("menu-open")) {
+      menu.classList.add("menu-open");
+    }
+  }
+
   handleMouseOver(e) {
     const pos = this.convertToPos(e);
     this.props.hover(pos);
@@ -32,6 +39,7 @@ class Grid extends React.Component {
     this.setState({
       instructions: false
     });
+    this.openSidebar();
 
     const pos = this.convertToPos(e);
     const blocks = this.props.blocks;
