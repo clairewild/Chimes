@@ -21,6 +21,9 @@ Chimes is a generative music synthesizer based on the Otomata app.  Sounds are g
 
 This project is built using React.js, HTML5 canvas, and React Konva, a JavaScript library that integrates the HTML5 canvas with React.  It also makes use of HTML audio elements.
 
+![screenshot](http://res.cloudinary.com/dq5kxnx9d/image/upload/v1492398095/Screen_Shot_2017-04-16_at_7.56.12_PM_jjvl9c.png)
+![screenshot](http://res.cloudinary.com/dq5kxnx9d/image/upload/v1492398084/Screen_Shot_2017-04-16_at_7.55.43_PM_cvj880.png)
+
 ## Features and Implementation
 
 ### Stage and Grid
