@@ -23,19 +23,50 @@ This project is built using React.js, HTML5 canvas, and React Konva, a JavaScrip
 
 ## Features and Implementation
 
+### Stage and Grid
+
+The `Grid` component renders a konva `Stage`, handling all click and hover events.  Nested under the stage is a `Layer` element, containing all the other konva elements - cells, blocks, hover, collisions, and ripples.  The global state keeps track of the positions of all cells, blocks, hover, collisions, and ripples.
+
 ### Block Logic
 
+The `Sidebar` component (where the play button is located) manages the logic for moving, rotating, and reversing blocks.  Clicking play installs an `intervalHandler` which calls the `oneStep` function.  This function checks if blocks are about to collide, have collided, or are hitting a wall, and dispatches the appropriate action:
 
+```javascript
+blockKeys.forEach(key => {
+  let block = blocks[key];
 
+  if (this.isCollided(blocks, blockKeys, block)) {
+    this.props.rotateBlock(block.id);
+  }
+  else if (this.isHittingWall(block)) {
+    this.playSound(block.pos);
+    this.props.addRipple(block.pos);
+    this.props.reverseBlock(block.id);
+  }
+  this.props.moveBlock(block.id);
+});
+```
 
+The `rotateBlock`, `reverseBlock`, and `moveBlock` actions all hit the BlockReducer, which updates the global state.  Blocks are stored in the state with an id, position, direction, and the reducer uses the constant objects `rotated`, `reversed`, and `offsets` to convert current direction or position to the new direction or position.
+
+```javascript
+const rotated = {
+  "up": "right",
+  "right": "down",
+  "down": "left",
+  "left": "up"
+};
+```
+
+The `playSound` function creates a new HTML Audio element each time it is called.  `SOUNDS` is an object containing 9 different file paths for audio files I created using GarageBand, and `playSound` decides which file to use for the `let note = new Audio(file)` by checking the position it is passed.  `playSound` finally calls `note.play()`.
 
 ### Ripple Animations
 
-The ripple effect when a block plays a note is created by a Ripple component that renders three konva Circle elements.  The position of a ripple is added to the state by the Sidebar component (which contains all the block moving logic and checks when a block is hitting the wall).  Ripple components then delete themselves from the state after a setTimeout.
+The ripple effect when a block plays a note is created by a `Ripple` component that renders three konva `Circle` elements.  The position of a `Ripple` is added to the state by the `Sidebar` component (which checks when a block is hitting the wall).  `Ripple` components then delete themselves from the state after a `setTimeout`.
 
-I used Konva.Easings to animate the ripples.  In componentDidMount(), each circle starts expanding to a larger size over a set duration.  The largest circle has a set final size, and the smaller circles grow to a random size less than the largest circle.  The code looks something like this:
+I used `Konva.Easings` to animate the ripples.  In `componentDidMount()`, each circle starts expanding to a larger size over a set duration.  The largest circle has a set final size, and the smaller circles grow to a random size less than the largest circle.  The code looks something like this:
 
-```jsx
+```javascript
 componentDidMount() {
   const maxSize = 700;
 
