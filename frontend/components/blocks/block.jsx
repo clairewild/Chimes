@@ -1,6 +1,6 @@
 import React from 'react';
 import { Rect } from 'react-konva';
-
+ 
 class Block extends React.Component {
   constructor(props) {
     super(props);
