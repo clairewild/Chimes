@@ -41,7 +41,11 @@ class Grid extends React.Component {
     });
     this.openSidebar();
 
-    const pos = this.convertToPos(e);
+    let pos = [4, 4];
+    if (e.currentTarget.nodeType === "Stage") {
+      pos = this.convertToPos(e);
+    }
+
     const blocks = this.props.blocks;
     const blockKeys = Object.keys(blocks);
     const blockId = blockKeys.filter(key => {
@@ -79,7 +83,7 @@ class Grid extends React.Component {
   renderInstructions() {
     if (this.state.instructions) {
       return (
-        <div className="instructions">
+        <div className="instructions" onClick={ this.handleClick }>
           <h3><i className="fa fa-music" aria-hidden="true"></i>   Chimes</h3>
           <p>( click anywhere + press play )</p>
         </div>
