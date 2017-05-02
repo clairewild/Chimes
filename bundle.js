@@ -13269,7 +13269,11 @@ var Grid = function (_React$Component) {
       });
       this.openSidebar();
 
-      var pos = this.convertToPos(e);
+      var pos = [4, 4];
+      if (e.currentTarget.nodeType === "Stage") {
+        pos = this.convertToPos(e);
+      }
+
       var blocks = this.props.blocks;
       var blockKeys = Object.keys(blocks);
       var blockId = blockKeys.filter(function (key) {
@@ -13308,7 +13312,7 @@ var Grid = function (_React$Component) {
       if (this.state.instructions) {
         return _react2.default.createElement(
           'div',
-          { className: 'instructions' },
+          { className: 'instructions', onClick: this.handleClick },
           _react2.default.createElement(
             'h3',
             null,
