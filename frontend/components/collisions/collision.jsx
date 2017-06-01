@@ -8,7 +8,7 @@ class Collision extends React.Component {
       image: new Image()
     }
 
-    this.state.image.src = "http://res.cloudinary.com/dq5kxnx9d/image/upload/v1491778125/dot_jzanxh.png";
+    this.state.image.src = "https://res.cloudinary.com/dq5kxnx9d/image/upload/v1491778125/dot_jzanxh.png";
   }
 
   componentDidMount() {

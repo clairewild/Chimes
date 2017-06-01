@@ -1,6 +1,6 @@
 import React from 'react';
 import { Rect } from 'react-konva';
- 
+
 class Block extends React.Component {
   constructor(props) {
     super(props);
@@ -8,7 +8,7 @@ class Block extends React.Component {
       image: new Image()
     }
 
-    this.state.image.src = "http://res.cloudinary.com/dq5kxnx9d/image/upload/v1491778125/qur71hxch7hkuozfd4gh.png";
+    this.state.image.src = "https://res.cloudinary.com/dq5kxnx9d/image/upload/v1491778125/qur71hxch7hkuozfd4gh.png";
   }
 
   render() {
